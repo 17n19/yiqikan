@@ -8,7 +8,7 @@
 <meta name="mobile-web-app-capable" content="yes">
 <title>ดูด้วยกัน · 一起看 💞</title>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💞</text></svg>">
-<!-- ไฟล์นี้ไม่ใช้ CDN / ฟอนต์ภายนอกเลย เพื่อให้เปิดได้ในจีน และเปิดจากไฟล์ในเครื่องได้ -->
+<!-- Single self-contained file: no CDN / external fonts, so it works in mainland China and from a local file -->
 <style>
 :root{
   --pink:#ff6fae; --pink2:#ffd3e7; --pink3:#fff0f7; --ink:#4b2a3b; --muted:#9a7487;
@@ -36,38 +36,50 @@ button.ghost{background:transparent;border:1.5px solid var(--line)}
 button.on{background:var(--mint);color:#174a3d;font-weight:700}
 button:disabled{opacity:.45;cursor:not-allowed;transform:none;box-shadow:none}
 select{border:1.5px solid var(--line);border-radius:999px;padding:.45em .8em;background:#fff}
-textarea{width:100%;min-height:92px;border:1.5px dashed var(--pink);border-radius:14px;padding:.7em;background:var(--pink3);font-family:ui-monospace,Consolas,monospace;font-size:12px;word-break:break-all;resize:vertical}
-input[type=text],input[type=password]{width:100%;border:1.5px solid var(--line);border-radius:12px;padding:.6em .8em;background:#fff}
+textarea{width:100%;min-height:70px;border:1.5px solid var(--line);border-radius:12px;padding:.6em .8em;background:#fff;font-size:13px}
+input[type=text],input[type=password]{width:100%;border:1.5px solid var(--line);border-radius:12px;padding:.65em .85em;background:#fff}
+input[type=text]:focus,input[type=password]:focus{outline:none;border-color:var(--pink);box-shadow:0 0 0 3px rgba(255,111,174,.18)}
 
 /* ---------- header ---------- */
 header{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:.6rem;padding:.6rem 1rem;background:rgba(255,255,255,.8);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
-.brand{font-size:1.15rem;font-weight:800;display:flex;align-items:center;gap:.4rem;margin-right:auto}
+.brand{font-size:1.15rem;font-weight:800;display:flex;align-items:center;gap:.4rem;margin-right:auto;min-width:0}
 .brand .logo{font-size:1.4rem;animation:bob 2.4s ease-in-out infinite}
+.brand .room{font-size:.8rem;font-weight:600;color:var(--muted);background:var(--pink3);border-radius:999px;padding:.15em .7em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:30vw}
 .pill{font-size:.78rem;padding:.3em .8em;border-radius:999px;background:#f3e8ee;white-space:nowrap}
 .pill.ok{background:#d9f7ee;color:#14634f}
 .pill.warn{background:#fff1cc;color:#7a5800}
 .pill.bad{background:#ffe0e0;color:#8a1f1f}
-#statPill{font-family:ui-monospace,Consolas,monospace;max-width:52vw;overflow:hidden;text-overflow:ellipsis}
+#statPill{font-family:ui-monospace,Consolas,monospace;max-width:40vw;overflow:hidden;text-overflow:ellipsis}
 
-/* ---------- connect screen ---------- */
-#connect{max-width:720px;margin:2.2rem auto;padding:0 1rem}
+/* ---------- join screen ---------- */
+#connect{max-width:520px;margin:2.2rem auto;padding:0 1rem}
 .card{background:var(--card);border-radius:var(--r);box-shadow:var(--shadow);padding:1.4rem;border:1px solid var(--line)}
 .hero{text-align:center}
 .hero .big{font-size:3.2rem;animation:bob 2.4s ease-in-out infinite}
 .hero h1{margin:.2rem 0 .3rem;font-size:1.8rem}
-.hero p{margin:0 0 1.1rem;color:var(--muted)}
+.hero p{margin:0 0 1rem;color:var(--muted);line-height:1.55}
+.field{margin-top:.8rem}
+.field label{display:block;font-size:.85rem;color:var(--muted);margin-bottom:.3rem}
+.inrow{display:flex;gap:.4rem}
+.inrow input{flex:1}
+.inrow button{flex:0 0 auto;padding:.5em .8em}
 .row{display:flex;gap:.6rem;flex-wrap:wrap;align-items:center}
-.choice{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-top:1rem}
-.choice button{padding:1.1rem;border-radius:16px;font-size:1.05rem}
-.step{margin-top:1rem}
-.step h3{margin:.2rem 0 .5rem;font-size:1rem}
+#joinBtn{width:100%;margin-top:1.1rem;padding:.9em;font-size:1.1rem;border-radius:16px}
+.check{display:flex;align-items:center;gap:.5rem;margin-top:.8rem;font-size:.9rem;color:var(--muted)}
+.check input{width:18px;height:18px;accent-color:var(--pink)}
 .tip{margin-top:1rem;font-size:.85rem;color:var(--muted);background:var(--pink3);border-radius:12px;padding:.8rem 1rem;line-height:1.6}
-.err{color:#c0264f;font-weight:700;margin-top:.4rem;min-height:1.2em}
+.err{color:#c0264f;font-weight:700;margin-top:.5rem;min-height:1.2em;font-size:.9rem}
 .note{font-size:.85rem;color:var(--muted);background:var(--pink3);border-radius:12px;padding:.5rem .8rem}
 
 /* ---------- app ---------- */
 #app{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:1rem;padding:1rem;max-width:1700px;margin:0 auto}
 @media (max-width:980px){#app{grid-template-columns:1fr}}
+#netBanner{grid-column:1/-1;display:flex;align-items:center;gap:.7rem;flex-wrap:wrap;background:#fff;border:2px dashed #ffb3c9;border-radius:16px;padding:.7rem 1rem;box-shadow:var(--shadow)}
+#netBanner .nb-ico{font-size:1.6rem;animation:bob 1.6s ease-in-out infinite}
+#netBanner .nb-txt{flex:1;min-width:180px;line-height:1.5}
+#netBanner .nb-txt b{display:block}
+#netBanner .nb-sub{font-size:.82rem;color:var(--muted)}
+#netBanner.reconn{border-color:#ffd36b;background:#fffaf0}
 .toolbar{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center;margin-bottom:.6rem}
 .tabs{display:inline-flex;background:#fff;border-radius:999px;padding:4px;border:1px solid var(--line)}
 .tabs button{background:transparent;padding:.45em 1em;position:relative}
@@ -95,10 +107,13 @@ header{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:.6re
 .reactbar button:hover{background:#fff3;box-shadow:none}
 #fsBtn{position:absolute;top:10px;right:10px;z-index:8;background:rgba(0,0,0,.35);color:#fff;opacity:.6}
 #fsBtn:hover{opacity:1}
+#ccBtn{position:absolute;top:10px;right:56px;z-index:8;background:rgba(0,0,0,.35);color:#fff;opacity:.6;font-weight:800;font-size:.85rem}
+#ccBtn:hover{opacity:1}
+#ccBtn.has{background:rgba(255,111,174,.85);opacity:.9}
 #unmuteBtn{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:9;font-size:1.2rem;padding:.8em 1.4em}
 .status{margin-top:.6rem;font-size:.88rem;color:var(--muted);min-height:1.3em}
 
-/* theater mode: pseudo-fullscreen that also works on iPhone (which can't fullscreen a div) */
+/* theater mode: pseudo-fullscreen that also works on iPhone */
 #stage.full{position:fixed;inset:0;z-index:100;border-radius:0;max-height:none;aspect-ratio:auto;width:100vw;height:100vh;height:100dvh}
 body.theater{overflow:hidden}
 #fullChat{position:absolute;left:10px;right:10px;bottom:calc(10px + env(safe-area-inset-bottom));z-index:9;display:none;gap:6px}
@@ -110,12 +125,46 @@ body.theater{overflow:hidden}
 #stage.full.hasMovie #toasts{bottom:calc(118px + env(safe-area-inset-bottom))}
 #stage.full .reactbar{top:calc(10px + env(safe-area-inset-top))}
 #stage.full #fsBtn{top:calc(10px + env(safe-area-inset-top));right:calc(10px + env(safe-area-inset-right))}
+#stage.full #ccBtn{top:calc(10px + env(safe-area-inset-top));right:calc(56px + env(safe-area-inset-right))}
+
+/* ---------- subtitles ---------- */
+#subs{position:absolute;left:4%;right:4%;bottom:13%;z-index:4;display:flex;flex-direction:column;align-items:center;gap:.15em;pointer-events:none;text-align:center;font-size:var(--subfs,22px);line-height:1.3;font-weight:700}
+#subs .sl{white-space:pre-line;padding:.04em .4em;border-radius:.25em;background:rgba(0,0,0,var(--subbg,.35));
+  text-shadow:0 0 3px #000,0 0 3px #000,1px 1px 2px #000,-1px -1px 2px #000;max-width:100%;word-break:break-word}
+#subs .sl.th{color:#fff}
+#subs .sl.en{color:#fff3a6}
+#subs .sl.zh{color:#ffd6ea}
+#subs .sl.small{font-size:.82em}
+#stage.full.hasMovie #subs{bottom:calc(120px + env(safe-area-inset-bottom))}
+#subDlg{max-width:600px}
+#subDlg h2{margin:0 0 .3rem}
+.subrow{border:1.5px solid var(--line);border-radius:14px;padding:.6rem .7rem;margin-top:.6rem;display:flex;flex-direction:column;gap:.45rem}
+.subrow.on{border-color:var(--pink);background:var(--pink3)}
+.subhead{display:flex;align-items:center;gap:.5rem}
+.chip{display:inline-flex;align-items:center;justify-content:center;min-width:2.2em;height:1.7em;border-radius:8px;font-weight:800;font-size:.8rem;color:#fff}
+.chip.th{background:#4a6cf7}.chip.en{background:#e0a100}.chip.zh{background:#e0344f}
+.subname{font-weight:700}
+.subinfo{font-size:.8rem;color:var(--muted);word-break:break-all}
+.subbtns{display:flex;flex-wrap:wrap;gap:.35rem;align-items:center}
+.subbtns button{padding:.35em .75em;font-size:.85rem}
+.offv{font-family:ui-monospace,Consolas,monospace;font-size:.85rem;min-width:4.2em;text-align:center}
+.sw{position:relative;display:inline-block;width:44px;height:26px;flex:0 0 auto;margin-left:auto}
+.sw input{opacity:0;width:0;height:0}
+.sw span{position:absolute;inset:0;border-radius:999px;background:#e8d6df;transition:.2s;cursor:pointer}
+.sw span::after{content:"";position:absolute;left:3px;top:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:.2s;box-shadow:0 1px 3px #0003}
+.sw input:checked+span{background:var(--pink)}
+.sw input:checked+span::after{transform:translateX(18px)}
+.sw input:disabled+span{opacity:.4;cursor:not-allowed}
+.subopts{display:flex;flex-wrap:wrap;gap:.6rem 1rem;align-items:center;margin-top:.8rem;font-size:.88rem}
+.subopts input[type=range]{width:130px;accent-color:var(--pink)}
+.subcount{display:inline-block;min-width:1.3em;padding:0 .35em;border-radius:999px;background:#fff;color:var(--pink);font-size:.75rem;margin-left:.3em}
 
 /* ---------- sidebar ---------- */
 aside{display:flex;flex-direction:column;gap:.8rem;min-height:0}
 .people{display:flex;justify-content:space-around;align-items:flex-start;padding:1rem .6rem .8rem}
 .bubble{display:flex;flex-direction:column;align-items:center;gap:.35rem;width:46%}
-.face{width:96px;height:96px;border-radius:50%;overflow:hidden;background:var(--pink2);display:flex;align-items:center;justify-content:center;font-size:2.6rem;border:3px solid #fff;box-shadow:var(--shadow);position:relative}
+.face{width:96px;height:96px;border-radius:50%;overflow:hidden;background:var(--pink2);display:flex;align-items:center;justify-content:center;font-size:2.6rem;border:3px solid #fff;box-shadow:var(--shadow);position:relative;transition:filter .3s}
+.face.away{filter:grayscale(1) opacity(.55)}
 .face video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .bname{font-weight:700;font-size:.95rem;text-align:center;word-break:break-word}
 .bstate{font-size:.8rem;color:var(--muted)}
@@ -129,6 +178,7 @@ aside{display:flex;flex-direction:column;gap:.8rem;min-height:0}
 #chatList{flex:1;overflow-y:auto;padding:.8rem;display:flex;flex-direction:column;gap:.45rem;max-height:46vh;min-height:200px;-webkit-overflow-scrolling:touch}
 .msg{max-width:82%;padding:.45em .8em;border-radius:16px 16px 16px 4px;background:#f4eef1;align-self:flex-start;word-break:break-word;line-height:1.45}
 .msg.mine{align-self:flex-end;background:var(--pink);color:#fff;border-radius:16px 16px 4px 16px}
+.msg.sys{align-self:center;background:transparent;color:var(--muted);font-size:.8rem;padding:.1em}
 .msg small{display:block;font-size:.7rem;opacity:.7}
 .chatin{display:flex;gap:.4rem;padding:.6rem;border-top:1px solid var(--line)}
 .chatin input{flex:1}
@@ -159,46 +209,10 @@ aside{display:flex;flex-direction:column;gap:.8rem;min-height:0}
 dialog{border:0;border-radius:var(--r);box-shadow:var(--shadow);padding:1.3rem;max-width:520px;width:92vw;color:var(--ink)}
 dialog::backdrop{background:rgba(75,42,59,.35)}
 dialog label{display:block;font-size:.85rem;margin:.6rem 0 .25rem;color:var(--muted)}
-/* ---------- subtitles ---------- */
-#subs{position:absolute;left:4%;right:4%;bottom:13%;z-index:4;display:flex;flex-direction:column;align-items:center;gap:.15em;pointer-events:none;text-align:center;font-size:var(--subfs,22px);line-height:1.3;font-weight:700}
-#subs .sl{white-space:pre-line;padding:.04em .4em;border-radius:.25em;background:rgba(0,0,0,var(--subbg,.35));
-  text-shadow:0 0 3px #000,0 0 3px #000,1px 1px 2px #000,-1px -1px 2px #000;max-width:100%;word-break:break-word}
-#subs .sl.th{color:#fff}
-#subs .sl.en{color:#fff3a6}
-#subs .sl.zh{color:#ffd6ea}
-#subs .sl.small{font-size:.82em}
-#stage.full.hasMovie #subs{bottom:calc(120px + env(safe-area-inset-bottom))}
-#ccBtn{position:absolute;top:10px;right:56px;z-index:8;background:rgba(0,0,0,.35);color:#fff;opacity:.6;font-weight:800;font-size:.85rem}
-#ccBtn:hover{opacity:1}
-#ccBtn.has{background:rgba(255,111,174,.85);opacity:.9}
-#stage.full #ccBtn{top:calc(10px + env(safe-area-inset-top));right:calc(56px + env(safe-area-inset-right))}
-#subDlg{max-width:600px}
-#subDlg h2{margin:0 0 .3rem}
-.subrow{border:1.5px solid var(--line);border-radius:14px;padding:.6rem .7rem;margin-top:.6rem;display:flex;flex-direction:column;gap:.45rem}
-.subrow.on{border-color:var(--pink);background:var(--pink3)}
-.subhead{display:flex;align-items:center;gap:.5rem}
-.chip{display:inline-flex;align-items:center;justify-content:center;min-width:2.2em;height:1.7em;border-radius:8px;font-weight:800;font-size:.8rem;color:#fff}
-.chip.th{background:#4a6cf7}.chip.en{background:#e0a100}.chip.zh{background:#e0344f}
-.subname{font-weight:700}
-.subinfo{font-size:.8rem;color:var(--muted);word-break:break-all}
-.subbtns{display:flex;flex-wrap:wrap;gap:.35rem;align-items:center}
-.subbtns button{padding:.35em .75em;font-size:.85rem}
-.offv{font-family:ui-monospace,Consolas,monospace;font-size:.85rem;min-width:4.2em;text-align:center}
-.sw{position:relative;display:inline-block;width:44px;height:26px;flex:0 0 auto;margin-left:auto}
-.sw input{opacity:0;width:0;height:0}
-.sw span{position:absolute;inset:0;border-radius:999px;background:#e8d6df;transition:.2s;cursor:pointer}
-.sw span::after{content:"";position:absolute;left:3px;top:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:.2s;box-shadow:0 1px 3px #0003}
-.sw input:checked+span{background:var(--pink)}
-.sw input:checked+span::after{transform:translateX(18px)}
-.sw input:disabled+span{opacity:.4;cursor:not-allowed}
-.subopts{display:flex;flex-wrap:wrap;gap:.6rem 1rem;align-items:center;margin-top:.8rem;font-size:.88rem}
-.subopts input[type=range]{width:130px;accent-color:var(--pink)}
-.subcount{display:inline-block;min-width:1.3em;padding:0 .35em;border-radius:999px;background:#fff;color:var(--pink);font-size:.75rem;margin-left:.3em}
-.lostbar{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:150;background:#fff;border:2px solid #ffb3c9;border-radius:16px;padding:.8rem 1rem;box-shadow:var(--shadow);display:flex;gap:.8rem;align-items:center}
 
 /* ---------- touch devices ---------- */
 @media (hover:none){
-  .reactbar,#fsBtn{opacity:.85}
+  .reactbar,#fsBtn,#ccBtn{opacity:.85}
   button:hover{transform:none;box-shadow:none}
 }
 
@@ -207,15 +221,16 @@ dialog label{display:block;font-size:.85rem;margin:.6rem 0 .25rem;color:var(--mu
   header{padding:.45rem .6rem;padding-top:calc(.45rem + env(safe-area-inset-top));gap:.35rem}
   .brand{font-size:1rem}
   .brand .txt,#statPill{display:none}
+  .brand .room{max-width:34vw}
   header button{padding:.4em .7em}
   #connect{margin:1rem auto;padding:0 .7rem}
   .card{padding:1rem}
   .hero .big{font-size:2.4rem} .hero h1{font-size:1.45rem} .hero p{font-size:.92rem}
-  .choice{grid-template-columns:1fr}
-  input[type=text],input[type=password],textarea,select{font-size:16px}  /* prevent iOS zoom-on-focus */
-  textarea{min-height:70px}
+  input[type=text],input[type=password],textarea,select{font-size:16px}
   .row button{flex:1}
   #app{padding:.5rem;gap:.6rem;padding-bottom:calc(.5rem + env(safe-area-inset-bottom))}
+  #netBanner{padding:.55rem .7rem}
+  #netBanner button{flex:1}
   .toolbar{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none;margin:0 -.5rem .5rem;padding:0 .5rem 2px}
   .toolbar::-webkit-scrollbar{display:none}
   .toolbar>*{flex:0 0 auto}
@@ -224,7 +239,6 @@ dialog label{display:block;font-size:.85rem;margin:.6rem 0 .25rem;color:var(--mu
   .toolbar .note{white-space:normal;flex:1 0 100%;font-size:.78rem}
   #stage{border-radius:14px;max-height:none}
   .empty{padding:1rem;gap:.3rem} .empty .big{font-size:2.2rem} .empty p{font-size:.85rem;line-height:1.5}
-  #subDlg{width:100vw;max-width:100vw;margin:auto 0 0;border-radius:18px 18px 0 0;max-height:88vh;padding-bottom:calc(1rem + env(safe-area-inset-bottom))}
   .reactbar{max-width:calc(100% - 110px);left:8px;transform:none;overflow-x:auto;scrollbar-width:none;padding:3px 6px}
   .reactbar::-webkit-scrollbar{display:none}
   .reactbar button{font-size:1.15rem;padding:.15em .25em}
@@ -243,9 +257,8 @@ dialog label{display:block;font-size:.85rem;margin:.6rem 0 .25rem;color:var(--mu
   .rxzone{height:140px}
   .xo{grid-template-columns:repeat(3,76px)} .xo button{width:76px;height:76px}
   .rps button{font-size:2.6rem}
-  .lostbar{left:.6rem;right:.6rem;transform:none;bottom:calc(.6rem + env(safe-area-inset-bottom))}
+  #subDlg{width:100vw;max-width:100vw;margin:auto 0 0;border-radius:18px 18px 0 0;max-height:88vh;padding-bottom:calc(1rem + env(safe-area-inset-bottom))}
 }
-/* phone held sideways (not in theater): let the video use the height */
 @media (max-height:500px) and (orientation:landscape){
   #stage:not(.full){max-height:calc(100vh - 70px);max-height:calc(100dvh - 70px)}
 }
@@ -263,78 +276,53 @@ body.shake #app{animation:shake .6s}
 <body>
 
 <header>
-  <div class="brand"><span class="logo">🐱💞🐼</span><span class="txt" data-i18n="title"></span></div>
+  <div class="brand"><span class="logo">🐱💞🐼</span><span class="txt" data-i18n="title"></span><span id="roomTag" class="room" hidden></span></div>
   <span id="statPill" class="pill" hidden></span>
   <span id="connPill" class="pill"></span>
   <button id="langBtn" class="ghost"></button>
   <button id="setBtn" class="ghost" title="Settings">⚙️</button>
 </header>
 
-<!-- ================= CONNECT ================= -->
+<!-- ================= JOIN ================= -->
 <section id="connect">
-  <div class="card">
+  <form class="card" id="joinForm" autocomplete="on">
     <div class="hero">
       <div class="big">💌</div>
       <h1 data-i18n="title"></h1>
       <p data-i18n="subtitle"></p>
     </div>
-    <label class="bstate" data-i18n="yourName"></label>
-    <input id="nameIn" type="text" maxlength="24" autocomplete="nickname">
-
-    <div id="choice" class="choice">
-      <button id="hostBtn" class="primary" data-i18n="host"></button>
-      <button id="guestBtn" data-i18n="guest"></button>
+    <div class="field">
+      <label for="nameIn" data-i18n="yourName"></label>
+      <input id="nameIn" type="text" maxlength="24" autocomplete="nickname" required>
     </div>
-
-    <div id="hostPanel" hidden>
-      <div class="step">
-        <h3 data-i18n="h1"></h3>
-        <textarea id="offerOut" readonly></textarea>
-        <div class="row" style="margin-top:.4rem">
-          <button id="shareOffer" class="primary" data-i18n="shareTo" hidden></button>
-          <button id="copyOffer" data-i18n="copy"></button>
-        </div>
-      </div>
-      <div class="step">
-        <h3 data-i18n="h2"></h3>
-        <textarea id="answerIn"></textarea>
-        <div class="row" style="margin-top:.4rem">
-          <button class="pasteBtn" data-target="#answerIn" data-i18n="paste"></button>
-          <button id="connectBtn" class="primary" data-i18n="connect"></button>
-        </div>
-        <div id="hostErr" class="err"></div>
-        <button class="ghost backBtn" data-i18n="back"></button>
+    <div class="field">
+      <label for="roomIn" data-i18n="roomName"></label>
+      <div class="inrow">
+        <input id="roomIn" type="text" maxlength="40" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" required>
+        <button type="button" id="diceBtn" title="random">🎲</button>
       </div>
     </div>
-
-    <div id="guestPanel" hidden>
-      <div class="step">
-        <h3 data-i18n="g1"></h3>
-        <textarea id="offerIn"></textarea>
-        <div class="row" style="margin-top:.4rem">
-          <button class="pasteBtn" data-target="#offerIn" data-i18n="paste"></button>
-          <button id="replyBtn" class="primary" data-i18n="makeReply"></button>
-        </div>
-        <div id="guestErr" class="err"></div>
+    <div class="field">
+      <label for="passIn" data-i18n="roomPass"></label>
+      <div class="inrow">
+        <input id="passIn" type="password" maxlength="64" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" required>
+        <button type="button" id="eyeBtn">👁️</button>
       </div>
-      <div class="step" id="guestStep2" hidden>
-        <h3 data-i18n="g2"></h3>
-        <textarea id="answerOut" readonly></textarea>
-        <div class="row" style="margin-top:.4rem">
-          <button id="shareAnswer" class="primary" data-i18n="shareTo" hidden></button>
-          <button id="copyAnswer" data-i18n="copy"></button>
-        </div>
-        <div class="bstate" style="margin-top:.5rem" data-i18n="waiting"></div>
-      </div>
-      <button class="ghost backBtn" style="margin-top:.6rem" data-i18n="back"></button>
     </div>
-
+    <label class="check"><input type="checkbox" id="autoIn" checked><span data-i18n="autoJoin"></span></label>
+    <button id="joinBtn" class="primary" type="submit" data-i18n="join"></button>
+    <div id="joinErr" class="err"></div>
     <div class="tip" data-i18n="tips"></div>
-  </div>
+  </form>
 </section>
 
 <!-- ================= APP ================= -->
 <section id="app" hidden>
+  <div id="netBanner" hidden>
+    <span class="nb-ico" id="nbIco">⏳</span>
+    <div class="nb-txt"><b id="nbTitle"></b><span class="nb-sub" id="nbSub"></span></div>
+    <button id="inviteBtn" class="primary" data-i18n="invite"></button>
+  </div>
   <main>
     <div class="toolbar">
       <div class="tabs">
@@ -342,11 +330,9 @@ body.shake #app{animation:shake .6s}
         <button id="tabScreen" data-i18n="modeScreen"></button>
       </div>
       <span class="spacer"></span>
-      <!-- file mode -->
       <label class="filebtn fileOnly"><button tabindex="-1" class="primary" data-i18n="pickFile"></button><input id="fileIn" type="file" accept="video/*,.mkv,.mp4,.webm,.mov,.m4v"></label>
       <button id="subOpen" class="fileOnly"><span data-i18n="pickSub"></span><span id="subCount" class="subcount" hidden></span></button>
       <button id="countBtn" class="fileOnly" data-i18n="countdown"></button>
-      <!-- screen mode -->
       <select id="qSel" class="screenOnly shareCap" title="Quality">
         <option value="720">720p · 3.5 Mbps</option>
         <option value="1080" selected>1080p30 · 8 Mbps ⭐</option>
@@ -394,7 +380,7 @@ body.shake #app{animation:shake .6s}
           <div class="bstate" id="stateMe"></div>
         </div>
         <div class="bubble">
-          <div class="face" id="faceThem"><span id="avThem">🐼</span><video id="camRemote" autoplay playsinline></video></div>
+          <div class="face away" id="faceThem"><span id="avThem">🐼</span><video id="camRemote" autoplay playsinline></video></div>
           <div class="bname" id="nameThem"></div>
           <div class="bstate" id="stateThem"></div>
         </div>
@@ -431,8 +417,6 @@ body.shake #app{animation:shake .6s}
   </aside>
 </section>
 
-<div id="lostbar" class="lostbar" hidden><span id="lostText"></span><button class="primary" onclick="location.reload()" data-i18n="reload"></button></div>
-
 <dialog id="subDlg">
   <h2>💬 <span data-i18n="subTitle"></span></h2>
   <p class="bstate" style="margin:.2rem 0 .7rem" data-i18n="subHelp"></p>
@@ -447,14 +431,17 @@ body.shake #app{animation:shake .6s}
 
 <dialog id="settings">
   <h2 style="margin-top:0">⚙️ <span data-i18n="settings"></span></h2>
-  <p class="bstate" data-i18n="turnHelp"></p>
+  <div class="row"><button id="leaveBtn" data-i18n="leave"></button><button id="resetScore" data-i18n="resetScore"></button></div>
+  <p class="bstate" style="margin-top:1rem" data-i18n="turnHelp"></p>
   <label>TURN URL (turn:host:3478?transport=udp, turns:host:443?transport=tcp)</label>
   <input id="turnUrl" type="text" placeholder="turn:example.com:3478" autocapitalize="off" autocorrect="off">
   <label>Username</label><input id="turnUser" type="text" autocapitalize="off" autocorrect="off">
   <label>Password / Credential</label><input id="turnPass" type="password">
+  <label data-i18n="brokerLbl"></label>
+  <textarea id="brokerIn" spellcheck="false" autocapitalize="off"></textarea>
   <div class="row" style="margin-top:1rem">
     <button id="saveSet" class="primary" data-i18n="save"></button>
-    <button id="resetScore" data-i18n="resetScore"></button>
+    <span class="spacer"></span>
     <button id="closeSet" class="ghost" data-i18n="close"></button>
   </div>
 </dialog>
@@ -462,36 +449,31 @@ body.shake #app{animation:shake .6s}
 <script>
 'use strict';
 /* =====================================================================
-   ดูด้วยกัน · 一起看  —  single-file WebRTC watch-party (no server, no CDN)
-   Works on desktop + phones (iOS Safari 15.4+, Android Chrome).
-   - Signaling: copy/paste (or share-sheet / invite link) once, then all
-     renegotiation runs over the WebRTC DataChannel ("perfect negotiation")
-   - Movie mode: both play the same local file, synced (full quality, ~0 bandwidth)
-   - Screen mode: getDisplayMedia up to 1440p (desktop only; phones can watch)
+   ดูด้วยกัน · 一起看  —  single-file WebRTC watch-party (no own server, no CDN)
+   - Join with ROOM NAME + PASSWORD. Signaling goes over public MQTT brokers
+     (WebSocket), end-to-end encrypted with AES-GCM derived from room+password.
+     Several brokers are used at once (one in mainland China) for reachability.
+   - Auto-reconnect: ICE restart, then full re-handshake; auto re-join on reload.
+   - Movie mode: both play the same local file, synced. Screen mode: up to 1440p.
+   - 3-language subtitles, chat, mic/cam, mini games. Desktop + phones.
    ===================================================================== */
 
 const T = {
   th: {
-    title:'ดูด้วยกัน', subtitle:'ดูหนัง แชร์จอ เล่นเกม กับคนไกล — ต่อตรงแบบ P2P ไม่ผ่านเซิร์ฟเวอร์ ไม่ต้องสมัครอะไร',
-    yourName:'ชื่อเล่นของคุณ', host:'💌 สร้างห้อง (คนชวน)', guest:'🔑 เข้าห้อง (มีโค้ดเชิญแล้ว)',
-    h1:'① ส่งโค้ดเชิญนี้ให้แฟน (ทาง WeChat / LINE)', h2:'② วางโค้ดตอบกลับที่แฟนส่งมา แล้วกดเชื่อมต่อ',
-    g1:'① วางโค้ดเชิญจากแฟน', g2:'② ส่งโค้ดตอบกลับนี้ให้แฟน แล้วรอสักครู่ ระบบจะเข้าห้องเอง',
-    gen:'กำลังสร้างโค้ด… (2-4 วินาที)', copy:'📋 คัดลอก', copied:'คัดลอกแล้ว ✓', connect:'เชื่อมต่อ 💞', back:'← กลับ',
-    makeReply:'สร้างโค้ดตอบกลับ', badCode:'โค้ดไม่ถูกต้อง — ลองคัดลอกใหม่ให้ครบทั้งหมด', wrongType:'นี่ไม่ใช่โค้ดที่ถูกฝั่ง (โค้ดเชิญ ↔ โค้ดตอบกลับ)',
-    waiting:'⏳ กำลังรอเชื่อมต่อ… (อย่าปิดหน้านี้ ถ้าสลับแอปไปส่งโค้ดให้กลับมาหน้านี้ด้วย)',
-    shareTo:'📤 ส่งต่อ (WeChat/LINE)', paste:'📋 วาง', pasteFail:'วางอัตโนมัติไม่ได้ — กดค้างในช่องแล้วเลือก “วาง”',
-    inviteMsg:'💞 มาดูด้วยกันนะ! กดลิงก์นี้ (ถ้าเปิดในแอปแชท ให้กด ⋯ → เปิดในเบราว์เซอร์):', inviteMsg2:'หรือคัดลอกโค้ดนี้ไปวางในหน้าเว็บ:', answerMsg:'โค้ดตอบกลับ 💞',
-    joinFromLink:'ได้โค้ดเชิญจากลิงก์แล้ว ✓ ใส่ชื่อแล้วกด “สร้างโค้ดตอบกลับ”',
-    tips:'💡 ใช้ได้ทั้งคอมฯ และมือถือ (iPhone: Safari · Android: Chrome) · ถ้าเปิดลิงก์ใน WeChat/LINE ให้กด ⋯ แล้วเลือก “เปิดในเบราว์เซอร์” · แชร์จอต้องใช้คอมฯ (มือถือดูได้) · ต่อไม่ติด ลองสลับไปใช้ hotspot มือถือ หรือใส่ TURN ใน ⚙️',
-    connected:'เชื่อมต่อแล้ว', offline:'ยังไม่เชื่อมต่อ', connecting:'กำลังเชื่อม…', failed:'เชื่อมต่อไม่สำเร็จ',
-    failHelp:'ต่อไม่ติด 😢 ลอง: ① ให้ฝั่งใดฝั่งหนึ่งใช้ hotspot มือถือ ② ใส่ TURN server ใน ⚙️ ③ รีเฟรชแล้วสร้างโค้ดใหม่',
-    lost:'การเชื่อมต่อหลุด 🥺 รีเฟรชแล้วสร้างโค้ดใหม่', reload:'เริ่มใหม่',
+    title:'ดูด้วยกัน', subtitle:'ใส่ชื่อห้องกับรหัสผ่านเดียวกันทั้งสองคน แล้วกดเข้าห้อง — ระบบจะเจอกันและต่อให้เอง หลุดก็ต่อใหม่ให้อัตโนมัติ 💞',
+    yourName:'ชื่อเล่นของคุณ', roomName:'ชื่อห้อง', roomPass:'รหัสผ่านห้อง', autoJoin:'จำห้องนี้ไว้ เปิดเว็บครั้งหน้าเข้าห้องให้อัตโนมัติ', join:'เข้าห้อง 💞',
+    needAll:'กรอกชื่อ ชื่อห้อง และรหัสผ่านให้ครบนะ', noCrypto:'เบราว์เซอร์นี้ไม่รองรับการเข้ารหัส — เปิดผ่านลิงก์ https หรือใช้ Chrome/Safari รุ่นใหม่',
+    tips:'💡 ทั้งสองคนใส่ <b>ชื่อห้อง</b> และ <b>รหัสผ่าน</b> ให้ตรงกัน (รหัสผ่านตัวพิมพ์เล็ก/ใหญ่มีผล) · ข้อมูลนัดพบถูกเข้ารหัสด้วยรหัสผ่าน คนอื่นแอบดูไม่ได้ · ใช้ได้ทั้งคอมฯ และมือถือ (iPhone: Safari · Android: Chrome) · ถ้าเปิดในแอป WeChat/LINE ให้กด ⋯ → เปิดในเบราว์เซอร์',
+    invite:'📤 ชวนแฟน', inviteMsg:'💞 มาดูด้วยกันนะ! กดลิงก์นี้แล้วเข้าห้องได้เลย (ถ้าเปิดในแอปแชท ให้กด ⋯ → เปิดในเบราว์เซอร์)', inviteCopied:'คัดลอกลิงก์ชวนแล้ว ✓ ส่งให้แฟนได้เลย',
+    inviteManual:'ห้อง: {room}\nรหัสผ่าน: {pass}',
+    waitTitle:'รอแฟนเข้าห้องอยู่นะ…', waitSub:'ห้อง “{room}” · ให้แฟนใส่ชื่อห้องและรหัสผ่านเดียวกัน หรือส่งลิงก์ชวนไปเลย',
+    waitLong:'ถ้าแฟนเข้าแล้วแต่ยังไม่เจอกัน: เช็กว่าชื่อห้อง/รหัสผ่านตรงกันทุกตัวอักษร',
+    connTitle:'เจอแฟนแล้ว! กำลังเชื่อมต่อ…', reconnTitle:'การเชื่อมต่อสะดุด กำลังต่อใหม่ให้อัตโนมัติ… 🔄', reconnSub:'ไม่ต้องทำอะไร หนังยังเล่นต่อได้ตามปกติ',
+    sigTitle:'กำลังติดต่อเซิร์ฟเวอร์นัดพบ…', sigFail:'ติดต่อเซิร์ฟเวอร์นัดพบไม่ได้ ลองเปลี่ยนเน็ต (Wi-Fi ↔ 4G/5G) — ระบบจะลองใหม่เรื่อยๆ',
+    slowHint:'ต่อนานผิดปกติ: ลองให้ฝั่งใดฝั่งหนึ่งเปลี่ยนไปใช้เน็ตมือถือ หรือใส่ TURN server ใน ⚙️',
+    servers:'เซิร์ฟเวอร์นัดพบ', connected:'เชื่อมต่อแล้ว', offline:'ยังไม่เชื่อมต่อ', connecting:'กำลังเชื่อม…', waiting:'รอแฟน', reconnecting:'กำลังต่อใหม่',
+    joined:'เข้ามาแล้ว 💞', back:'กลับมาแล้ว 💞', left:'ออกจากห้องแล้ว', busy:'มีคนอื่นพยายามเข้าห้องนี้ (ห้องรับได้ 2 คน)',
     modeFile:'🎬 ดูหนังด้วยกัน', modeScreen:'🖥️ แชร์จอ', pickFile:'📂 เลือกไฟล์หนัง', pickSub:'💬 ซับ 3 ภาษา',
-    subTitle:'ซับไตเติ้ล ไทย · English · 中文', subHelp:'โหลดไฟล์ .srt / .vtt / .ass ได้ทีละหลายไฟล์ ระบบจะดูว่าเป็นภาษาอะไรให้เอง ซับจะถูกส่งให้แฟนอัตโนมัติ (โหลดคนเดียวพอ) แต่ละคนเลือกเปิดภาษาที่อยากดูเองได้ เปิดพร้อมกันหลายภาษาก็ได้',
-    subAuto:'📂 โหลดซับ (เลือกได้หลายไฟล์)', subSize:'ขนาด', subBg:'พื้นหลัง', subNone:'ยังไม่มีซับ', subLoad:'📂 โหลด', subDel:'✕ ลบ',
-    subFromPartner:'ได้จากแฟน 💞', subFromMe:'คุณโหลด', subLines:'บรรทัด', subOff:'ซับช้า/เร็ว',
-    subLoaded:'โหลดซับ', subGot:'ส่งซับมาให้', subSplit:'ไฟล์นี้มีซับจีน+อังกฤษในไฟล์เดียว แยกเป็น 2 ภาษาให้แล้ว ✓', subBad:'อ่านไฟล์ซับไม่ได้',
-    lname_th:'ไทย', lname_en:'English', lname_zh:'中文 (จีน)',
     countdown:'⏱️ 3-2-1 เล่นพร้อมกัน', startShare:'▶ เริ่มแชร์', stopShare:'■ หยุดแชร์',
     qMovie:'🎞️ หนัง/คลิป (ลื่น)', qDetail:'🔤 ตัวหนังสือ/เกม (คม)',
     emptyFile:'ทั้งสองคนกด “เลือกไฟล์หนัง” เรื่องเดียวกันในเครื่องตัวเอง → ได้ภาพเต็มความละเอียดของไฟล์ ไม่ใช้เน็ตส่งภาพเลย ระบบจะซิงก์ เล่น/หยุด/เลื่อน ให้อัตโนมัติ',
@@ -503,37 +485,37 @@ const T = {
     partnerOpened:'เปิดไฟล์', youOpened:'คุณเปิด', cantPlay:'เครื่องนี้เล่นไฟล์นี้ไม่ได้ — ลองไฟล์ .mp4 (H.264/AAC) ซึ่งเล่นได้ทุกเครื่อง',
     partnerSharing:'กำลังแชร์จอ',
     mic:'ไมค์', cam:'กล้อง', nudge:'คิดถึง 💓', nudged:'คิดถึงนะ! 💓', chat:'💬 แชท', games:'🎮 เกม',
-    chatPh:'พิมพ์ข้อความ…', send:'ส่ง', me:'ฉัน', partner:'แฟน',
+    chatPh:'พิมพ์ข้อความ…', send:'ส่ง', partner:'แฟน', you:'คุณ',
     gRx:'⚡ จับหัวใจไว', gRps:'✊ เป่ายิ้งฉุบ', gXo:'🐱 XO 🐼',
     rxIntro:'กดเริ่ม แล้วรอหัวใจโผล่ ใครแตะไวกว่าชนะ! (แตะก่อนหัวใจโผล่ = ฟาวล์)', start:'เริ่ม!', rxWait:'รอ… อย่าเพิ่งแตะ 👀', foul:'ฟาวล์! แตะเร็วไป 🙈',
     waitPartner:'รอแฟน…', youWin:'คุณชนะ! 🎉', youLose:'แฟนชนะ 🥺', draw:'เสมอ 🤝', rpsPick:'เลือกเลย!', rpsWait:'เลือกแล้ว รอแฟน… 🤫',
-    xoYour:'ตาคุณ', xoTheir:'ตาแฟน…', again:'เล่นใหม่', you:'คุณ',
-    settings:'ตั้งค่า', turnHelp:'TURN server (ไม่บังคับ) — ใช้เมื่อต่อ P2P ไม่ติด ใส่ฝั่งเดียวก็พอ ต้องตั้งก่อนสร้างโค้ด', save:'บันทึก', saved:'บันทึกแล้ว ✓',
-    resetScore:'รีเซ็ตคะแนน', close:'ปิด', tapSound:'🔊 แตะเพื่อเปิดเสียง', joined:'เข้ามาแล้ว 💞', playBy:'กดเล่น', pauseBy:'กดหยุด', seekBy:'เลื่อนเวลา',
-    permErr:'เปิดไมค์/กล้องไม่ได้ — ตรวจสิทธิ์ในเบราว์เซอร์ (ต้องเปิดผ่าน https)', limited:'ติดคอขวด',
-    backgroundWarn:'📱 ถ้าสลับแอปนานๆ การเชื่อมต่ออาจหลุด — กลับมาหน้านี้เร็วๆ นะ'
+    xoYour:'ตาคุณ', xoTheir:'ตาแฟน…', again:'เล่นใหม่',
+    settings:'ตั้งค่า', leave:'🚪 ออกจากห้อง', resetScore:'รีเซ็ตคะแนน', close:'ปิด', save:'บันทึก', saved:'บันทึกแล้ว ✓',
+    turnHelp:'TURN server (ไม่บังคับ) — ช่วยให้ต่อติดง่ายขึ้นเวลาเน็ตบางเจ้าบล็อก P2P ใส่ฝั่งเดียวก็พอ',
+    brokerLbl:'เซิร์ฟเวอร์นัดพบ (MQTT over WSS) บรรทัดละ 1 — ปล่อยว่าง = ใช้ค่าเริ่มต้น (ต้องตั้งเหมือนกันทั้งสองฝั่ง)',
+    tapSound:'🔊 แตะเพื่อเปิดเสียง', playBy:'กดเล่น', pauseBy:'กดหยุด', seekBy:'เลื่อนเวลา',
+    permErr:'เปิดไมค์/กล้องไม่ได้ — ตรวจสิทธิ์ในเบราว์เซอร์ (ต้องเปิดผ่าน https)', limited:'ติดคอขวด', notConnected:'ยังไม่ได้เชื่อมต่อกับแฟน',
+    subTitle:'ซับไตเติ้ล ไทย · English · 中文', subHelp:'โหลดไฟล์ .srt / .vtt / .ass ได้ทีละหลายไฟล์ ระบบจะดูว่าเป็นภาษาอะไรให้เอง ซับจะถูกส่งให้แฟนอัตโนมัติ (โหลดคนเดียวพอ) แต่ละคนเลือกเปิดภาษาที่อยากดูเองได้ เปิดพร้อมกันหลายภาษาก็ได้',
+    subAuto:'📂 โหลดซับ (เลือกได้หลายไฟล์)', subSize:'ขนาด', subBg:'พื้นหลัง', subNone:'ยังไม่มีซับ', subLoad:'📂 โหลด', subDel:'✕ ลบ',
+    subFromPartner:'ได้จากแฟน 💞', subFromMe:'คุณโหลด', subLines:'บรรทัด', subOff:'ซับช้า/เร็ว',
+    subLoaded:'โหลดซับ', subGot:'ส่งซับมาให้', subSplit:'ไฟล์นี้มีซับจีน+อังกฤษในไฟล์เดียว แยกเป็น 2 ภาษาให้แล้ว ✓', subBad:'อ่านไฟล์ซับไม่ได้',
+    lname_th:'ไทย', lname_en:'English', lname_zh:'中文 (จีน)'
   },
   zh: {
-    title:'一起看', subtitle:'和远方的TA一起看电影、共享屏幕、玩小游戏 — P2P 直连，不经过服务器，无需注册',
-    yourName:'你的昵称', host:'💌 创建房间（邀请方）', guest:'🔑 加入房间（已有邀请码）',
-    h1:'① 把邀请码发给TA（微信 / LINE）', h2:'② 粘贴TA发回的回复码，点击连接',
-    g1:'① 粘贴TA发来的邀请码', g2:'② 把回复码发回给TA，稍等片刻会自动进入房间',
-    gen:'正在生成…（2-4 秒）', copy:'📋 复制', copied:'已复制 ✓', connect:'连接 💞', back:'← 返回',
-    makeReply:'生成回复码', badCode:'代码无效 — 请重新完整复制', wrongType:'代码类型不对（邀请码 ↔ 回复码）',
-    waiting:'⏳ 等待连接…（不要关闭此页面，切到微信发送后请回到这里）',
-    shareTo:'📤 转发（微信/LINE）', paste:'📋 粘贴', pasteFail:'无法自动粘贴 — 长按输入框选择“粘贴”',
-    inviteMsg:'💞 一起看吧！点这个链接（在微信里请点 ⋯ → 在浏览器打开）：', inviteMsg2:'或复制下面的代码粘贴到网页里：', answerMsg:'回复码 💞',
-    joinFromLink:'已从链接获取邀请码 ✓ 填好昵称后点“生成回复码”',
-    tips:'💡 电脑和手机都能用（iPhone 用 Safari · 安卓用 Chrome）· 在微信里打开链接时请点右上角 ⋯ 选择“在浏览器打开” · 共享屏幕需要电脑（手机可以观看）· 连不上时试试手机热点，或在 ⚙️ 填写 TURN',
-    connected:'已连接', offline:'未连接', connecting:'连接中…', failed:'连接失败',
-    failHelp:'连接失败 😢 试试：① 其中一方换成手机热点 ② 在 ⚙️ 填写 TURN 服务器 ③ 刷新后重新生成代码',
-    lost:'连接已断开 🥺 请刷新并重新生成代码', reload:'重新开始',
+    title:'一起看', subtitle:'两个人输入相同的房间名和密码，点进入房间 — 会自动找到对方并连接，断线也会自动重连 💞',
+    yourName:'你的昵称', roomName:'房间名', roomPass:'房间密码', autoJoin:'记住这个房间，下次打开自动进入', join:'进入房间 💞',
+    needAll:'请填写昵称、房间名和密码', noCrypto:'此浏览器不支持加密 — 请通过 https 链接打开，或使用新版 Chrome/Safari',
+    tips:'💡 两个人的 <b>房间名</b> 和 <b>密码</b> 要完全一样（密码区分大小写）· 连接信息用密码加密，别人看不到 · 电脑和手机都能用（iPhone 用 Safari · 安卓用 Chrome）· 在微信里打开请点右上角 ⋯ → 在浏览器打开',
+    invite:'📤 邀请TA', inviteMsg:'💞 一起看吧！点这个链接就能进入房间（在微信里请点 ⋯ → 在浏览器打开）', inviteCopied:'邀请链接已复制 ✓ 发给TA吧',
+    inviteManual:'房间：{room}\n密码：{pass}',
+    waitTitle:'等TA进入房间…', waitSub:'房间“{room}” · 让TA输入相同的房间名和密码，或者直接发邀请链接',
+    waitLong:'如果TA已经进来了但还没连上：检查房间名/密码是否每个字都一样',
+    connTitle:'找到TA了！正在连接…', reconnTitle:'连接有点不稳，正在自动重连… 🔄', reconnSub:'什么都不用做，视频可以继续播放',
+    sigTitle:'正在连接服务器…', sigFail:'连接不上服务器，试试换个网络（Wi-Fi ↔ 4G/5G）— 会一直自动重试',
+    slowHint:'连接时间太长：试试其中一方换成手机流量，或在 ⚙️ 填写 TURN 服务器',
+    servers:'服务器', connected:'已连接', offline:'未连接', connecting:'连接中…', waiting:'等TA', reconnecting:'重连中',
+    joined:'来啦 💞', back:'回来啦 💞', left:'离开了房间', busy:'有别人想进这个房间（房间只能 2 个人）',
     modeFile:'🎬 一起看视频', modeScreen:'🖥️ 共享屏幕', pickFile:'📂 选择视频', pickSub:'💬 三语字幕',
-    subTitle:'字幕 泰语 · English · 中文', subHelp:'支持 .srt / .vtt / .ass，可一次选多个文件，会自动识别语言。字幕会自动发给TA（一个人加载就够了），每个人可以自己选择显示哪种语言，也可以同时显示多种语言',
-    subAuto:'📂 加载字幕（可多选）', subSize:'大小', subBg:'背景', subNone:'还没有字幕', subLoad:'📂 加载', subDel:'✕ 删除',
-    subFromPartner:'来自TA 💞', subFromMe:'你加载的', subLines:'条', subOff:'字幕快/慢',
-    subLoaded:'加载了字幕', subGot:'发来了字幕', subSplit:'这个文件是中英双语字幕，已自动拆分成两种语言 ✓', subBad:'无法读取字幕文件',
-    lname_th:'ไทย (泰语)', lname_en:'English (英语)', lname_zh:'中文',
     countdown:'⏱️ 3-2-1 一起播放', startShare:'▶ 开始共享', stopShare:'■ 停止共享',
     qMovie:'🎞️ 电影/视频（流畅）', qDetail:'🔤 文字/游戏（清晰）',
     emptyFile:'两人各自点“选择视频”，选同一部视频 → 原画质播放，不占网速传画面，播放/暂停/拖动自动同步',
@@ -545,15 +527,21 @@ const T = {
     partnerOpened:'打开了', youOpened:'你打开了', cantPlay:'此设备无法播放该文件 — 请用 .mp4 (H.264/AAC)，所有设备都能播放',
     partnerSharing:'正在共享屏幕',
     mic:'麦克风', cam:'摄像头', nudge:'想你 💓', nudged:'想你啦！💓', chat:'💬 聊天', games:'🎮 游戏',
-    chatPh:'输入消息…', send:'发送', me:'我', partner:'TA',
+    chatPh:'输入消息…', send:'发送', partner:'TA', you:'你',
     gRx:'⚡ 抢爱心', gRps:'✊ 石头剪刀布', gXo:'🐱 井字棋 🐼',
     rxIntro:'点开始，等爱心出现，谁点得快谁赢！（提前点算犯规）', start:'开始！', rxWait:'等等…先别点 👀', foul:'犯规！点太早啦 🙈',
     waitPartner:'等TA…', youWin:'你赢啦！🎉', youLose:'TA赢了 🥺', draw:'平局 🤝', rpsPick:'出拳吧！', rpsWait:'已出拳，等TA… 🤫',
-    xoYour:'轮到你', xoTheir:'轮到TA…', again:'再来一局', you:'你',
-    settings:'设置', turnHelp:'TURN 服务器（可选）— P2P 连不上时使用，一方填写即可，需在生成代码前设置', save:'保存', saved:'已保存 ✓',
-    resetScore:'重置比分', close:'关闭', tapSound:'🔊 点击开启声音', joined:'来啦 💞', playBy:'播放了', pauseBy:'暂停了', seekBy:'拖动了进度',
-    permErr:'无法打开麦克风/摄像头 — 请检查浏览器权限（需要 https）', limited:'受限',
-    backgroundWarn:'📱 切到其他 App 太久可能会断开 — 记得快点回来哦'
+    xoYour:'轮到你', xoTheir:'轮到TA…', again:'再来一局',
+    settings:'设置', leave:'🚪 离开房间', resetScore:'重置比分', close:'关闭', save:'保存', saved:'已保存 ✓',
+    turnHelp:'TURN 服务器（可选）— 某些网络屏蔽 P2P 时帮助连接，一方填写即可',
+    brokerLbl:'连接服务器（MQTT over WSS）每行一个 — 留空 = 默认（两边必须设置一样）',
+    tapSound:'🔊 点击开启声音', playBy:'播放了', pauseBy:'暂停了', seekBy:'拖动了进度',
+    permErr:'无法打开麦克风/摄像头 — 请检查浏览器权限（需要 https）', limited:'受限', notConnected:'还没和TA连上',
+    subTitle:'字幕 泰语 · English · 中文', subHelp:'支持 .srt / .vtt / .ass，可一次选多个文件，会自动识别语言。字幕会自动发给TA（一个人加载就够了），每个人可以自己选择显示哪种语言，也可以同时显示多种语言',
+    subAuto:'📂 加载字幕（可多选）', subSize:'大小', subBg:'背景', subNone:'还没有字幕', subLoad:'📂 加载', subDel:'✕ 删除',
+    subFromPartner:'来自TA 💞', subFromMe:'你加载的', subLines:'条', subOff:'字幕快/慢',
+    subLoaded:'加载了字幕', subGot:'发来了字幕', subSplit:'这个文件是中英双语字幕，已自动拆分成两种语言 ✓', subBad:'无法读取字幕文件',
+    lname_th:'ไทย (泰语)', lname_en:'English (英语)', lname_zh:'中文'
   }
 };
 
@@ -561,12 +549,16 @@ const T = {
 const $ = s => document.querySelector(s);
 const LS = {
   get(k, d){ try{ const v = JSON.parse(localStorage.getItem('lv_'+k)); return v ?? d; }catch{ return d; } },
-  set(k, v){ try{ localStorage.setItem('lv_'+k, JSON.stringify(v)); }catch{} }
+  set(k, v){ try{ localStorage.setItem('lv_'+k, JSON.stringify(v)); }catch{} },
+  del(k){ try{ localStorage.removeItem('lv_'+k); }catch{} }
 };
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 let lang = LS.get('lang', (navigator.language||'').toLowerCase().startsWith('zh') ? 'zh' : 'th');
 const t = k => (T[lang] && T[lang][k]) || T.th[k] || k;
+const tf = (k, o) => t(k).replace(/\{(\w+)\}/g, (_, x) => o[x] ?? '');
 const fmtTime = s => { if(!isFinite(s)) return '--:--'; s=Math.round(s); const h=Math.floor(s/3600), m=Math.floor(s%3600/60), x=s%60; return (h? h+':'+String(m).padStart(2,'0') : m)+':'+String(x).padStart(2,'0'); };
+const rid = (n=8) => { const a = new Uint8Array(n); crypto.getRandomValues(a); return Array.from(a, b => b.toString(16).padStart(2,'0')).join(''); };
+const TE = new TextEncoder(), TD = new TextDecoder();
 
 /* ---------------- device capabilities ---------------- */
 const UA = navigator.userAgent || '';
@@ -577,59 +569,203 @@ const CAN_NATIVE_SHARE = typeof navigator.share === 'function';
 const IS_WEB = /^https?:$/.test(location.protocol);
 
 /* ---------------- state ---------------- */
+const MY_ID = LS.get('dev', null) || (() => { const v = rid(8); LS.set('dev', v); return v; })();   // stable per device
+const MY_INST = rid(4);                                                                                // per page load
 let myName = LS.get('name', '');
 let partnerName = '';
-let pc = null, dc = null, polite = false, isHost = false, dcReady = false;
-let makingOffer = false, ignoreOffer = false;
-let lastRtt = 150;
 let mode = 'file';
 const remoteKinds = {}, remoteStreams = {};
 let remoteSharing = false, localSharing = false;
 let screenStream = null, screenSenders = [];
-let camStream = new MediaStream(); const camSenders = { audio:null, video:null };
+const camStream = new MediaStream(); const camTracks = { audio:null, video:null }; let camSenders = { audio:null, video:null };
 let partnerMedia = { mic:false, cam:false };
 let movieLoaded = false, myFile = null, partnerFile = null, ignoreUntil = 0, rateTimer = null;
 let scores = LS.get('scores', { me:0, them:0 });
 let chatUnread = 0, panelTab = 'chat';
-const mySym = () => isHost ? '🐱' : '🐼';
-const theirSym = () => isHost ? '🐼' : '🐱';
+let lastRtt = 150;
+const isHost = () => !peerId || MY_ID < peerId;      // stable roles: 🐱 = smaller device id
+const mySym = () => isHost() ? '🐱' : '🐼';
+const theirSym = () => isHost() ? '🐼' : '🐱';
 
 /* ---------------- i18n ---------------- */
 function applyLang(){
   document.documentElement.lang = lang === 'th' ? 'th' : 'zh-CN';
   document.querySelectorAll('[data-i18n]').forEach(el => el.textContent = t(el.dataset.i18n));
   document.querySelectorAll('[data-i18n-ph]').forEach(el => el.placeholder = t(el.dataset.i18nPh));
+  document.querySelector('.tip').innerHTML = t('tips');
   $('#langBtn').textContent = lang === 'th' ? '中文' : 'ไทย';
   $('#nameIn').placeholder = lang === 'th' ? 'เช่น มิ้นท์' : '比如 小明';
-  updateConnPill(); renderAll();
+  $('#roomIn').placeholder = lang === 'th' ? 'เช่น mint-wei' : '比如 mint-wei';
+  $('#passIn').placeholder = lang === 'th' ? 'ตั้งรหัสที่รู้กันสองคน' : '只有你们俩知道的密码';
+  renderNet(); renderAll();
 }
 $('#langBtn').onclick = () => { lang = lang === 'th' ? 'zh' : 'th'; LS.set('lang', lang); applyLang(); };
 
-/* ---------------- code encode/decode ---------------- */
-function b64u(bytes){ let s=''; for(let i=0;i<bytes.length;i+=0x8000) s += String.fromCharCode.apply(null, bytes.subarray(i,i+0x8000)); return btoa(s).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,''); }
-function unb64u(str){ str=str.replace(/-/g,'+').replace(/_/g,'/'); while(str.length%4) str+='='; const bin=atob(str); const u=new Uint8Array(bin.length); for(let i=0;i<bin.length;i++) u[i]=bin.charCodeAt(i); return u; }
-async function deflate(raw){
-  try{ return new Uint8Array(await new Response(new Blob([raw]).stream().pipeThrough(new CompressionStream('deflate-raw'))).arrayBuffer()); }
-  catch{ return null; }
+/* =====================================================================
+   SIGNALING over public MQTT brokers (tiny MQTT 3.1.1 client, QoS 0)
+   ===================================================================== */
+const DEFAULT_BROKERS = [
+  'wss://broker-cn.emqx.io:8084/mqtt',   // EMQX, mainland China
+  'wss://broker.emqx.io:8084/mqtt',      // EMQX, global
+  'wss://test.mosquitto.org:8081/mqtt'   // Eclipse Mosquitto, EU
+];
+function brokerList(){
+  const q = new URLSearchParams(location.search).get('broker');
+  if (q) return q.split(',').map(s => s.trim()).filter(Boolean);
+  const custom = (LS.get('brokers', '') || '').split(/\s+/).map(s => s.trim()).filter(s => /^wss?:\/\//.test(s));
+  return custom.length ? custom : DEFAULT_BROKERS;
 }
-async function encodeCode(obj){
-  const raw = new TextEncoder().encode(JSON.stringify(obj));
-  const z = ('CompressionStream' in window) ? await deflate(raw) : null;
-  return z ? 'LOVE-Z' + b64u(z) : 'LOVE-P' + b64u(raw);
+function mqLen(n){ const out = []; do{ let d = n % 128; n = Math.floor(n / 128); if (n > 0) d |= 128; out.push(d); }while(n > 0); return out; }
+function mqPacket(first, ...parts){
+  let len = 0; for (const p of parts) len += p.length;
+  const lb = mqLen(len), out = new Uint8Array(1 + lb.length + len);
+  out[0] = first; out.set(lb, 1); let o = 1 + lb.length;
+  for (const p of parts){ out.set(p, o); o += p.length; }
+  return out;
 }
-async function decodeCode(code){
-  code = (code||'').replace(/\s+/g,'');
-  const m = code.match(/LOVE-([ZP])([A-Za-z0-9_-]+)/); if(!m) throw new Error('bad');
-  let bytes = unb64u(m[2]);
-  if (m[1] === 'Z'){
-    bytes = new Uint8Array(await new Response(new Blob([bytes]).stream().pipeThrough(new DecompressionStream('deflate-raw'))).arrayBuffer());
+function mqStr(s){ const b = TE.encode(s); const o = new Uint8Array(2 + b.length); o[0] = b.length >> 8; o[1] = b.length & 255; o.set(b, 2); return o; }
+
+class MqttLink {
+  constructor(url, onMessage, onState){
+    this.url = url; this.onMessage = onMessage; this.onState = onState;
+    this.ws = null; this.ok = false; this.topics = new Set(); this.buf = new Uint8Array(0);
+    this.delay = 1000; this.closed = false; this.pid = 1; this.ping = null; this.lastRx = 0;
+    this.connect();
   }
-  const o = JSON.parse(new TextDecoder().decode(bytes));
-  if(!o || !o.s || !o.y) throw new Error('bad');
-  return o;
+  connect(){
+    if (this.closed) return;
+    let ws;
+    try{ ws = new WebSocket(this.url, ['mqtt']); }catch(e){ this.retry(); return; }
+    ws.binaryType = 'arraybuffer'; this.ws = ws; this.buf = new Uint8Array(0);
+    const to = setTimeout(() => { if (!this.ok) try{ ws.close(); }catch{} }, 8000);
+    ws.onopen = () => {
+      const cid = 'yq' + rid(8);
+      const vh = new Uint8Array([0, 4, 77, 81, 84, 84, 4, 2, 0, 45]);   // "MQTT", level 4, clean session, keepalive 45s
+      ws.send(mqPacket(0x10, vh, mqStr(cid)));
+    };
+    ws.onmessage = e => { this.lastRx = Date.now(); this.feed(new Uint8Array(e.data)); };
+    ws.onclose = ws.onerror = () => {
+      clearTimeout(to);
+      if (this.ws !== ws) return;
+      this.ws = null; const was = this.ok; this.ok = false; clearInterval(this.ping);
+      if (was) this.onState();
+      this.retry();
+    };
+  }
+  retry(){
+    if (this.closed) return;
+    clearTimeout(this.rt);
+    this.rt = setTimeout(() => this.connect(), this.delay);
+    this.delay = Math.min(this.delay * 1.7, 15000);
+  }
+  kick(){ if (!this.ok && !this.closed){ this.delay = 1000; if (!this.ws){ clearTimeout(this.rt); this.connect(); } } }
+  feed(chunk){
+    const b = new Uint8Array(this.buf.length + chunk.length); b.set(this.buf); b.set(chunk, this.buf.length);
+    let off = 0;
+    while (b.length - off >= 2){
+      let mul = 1, len = 0, i = off + 1, byte;
+      do{ if (i >= b.length) { this.buf = b.slice(off); return; } byte = b[i++]; len += (byte & 127) * mul; mul *= 128; }while(byte & 128);
+      if (b.length < i + len){ break; }
+      this.packet(b[off], b.subarray(i, i + len));
+      off = i + len;
+    }
+    this.buf = b.slice(off);
+  }
+  packet(h, body){
+    const type = h >> 4;
+    if (type === 2){                                     // CONNACK
+      if (body[1] !== 0){ try{ this.ws.close(); }catch{} return; }
+      this.ok = true; this.delay = 1000;
+      for (const tp of this.topics) this.sendSub(tp);
+      clearInterval(this.ping);
+      this.ping = setInterval(() => {
+        if (!this.ws) return;
+        try{ this.ws.send(new Uint8Array([0xC0, 0])); }catch{}
+        if (Date.now() - this.lastRx > 70000) try{ this.ws.close(); }catch{}
+      }, 20000);
+      this.onState();
+    } else if (type === 3){                              // PUBLISH
+      const qos = (h >> 1) & 3;
+      const tl = (body[0] << 8) | body[1];
+      const topic = TD.decode(body.subarray(2, 2 + tl));
+      let p = 2 + tl; if (qos) p += 2;
+      this.onMessage(topic, body.slice(p));
+    }
+  }
+  sendSub(topic){
+    if (!this.ok) return;
+    const id = (this.pid = (this.pid % 65000) + 1);
+    this.ws.send(mqPacket(0x82, new Uint8Array([id >> 8, id & 255]), mqStr(topic), new Uint8Array([0])));
+  }
+  subscribe(topic){ this.topics.add(topic); this.sendSub(topic); }
+  publish(topic, payload){
+    if (!this.ok) return false;
+    try{ this.ws.send(mqPacket(0x30, mqStr(topic), payload)); return true; }catch{ return false; }
+  }
+  close(){ this.closed = true; clearTimeout(this.rt); clearInterval(this.ping); try{ this.ws && this.ws.close(); }catch{} }
 }
 
-/* ---------------- ICE servers ---------------- */
+/* ---- room crypto: topic + AES-GCM key derived from room name + password ---- */
+let room = null;   // { name, pass, topic, key }
+async function deriveRoom(name, pass){
+  const norm = name.trim().toLowerCase();
+  const base = await crypto.subtle.importKey('raw', TE.encode(pass), 'PBKDF2', false, ['deriveBits']);
+  const bits = new Uint8Array(await crypto.subtle.deriveBits({ name:'PBKDF2', salt:TE.encode('yiqikan/v2/' + norm), iterations:120000, hash:'SHA-256' }, base, 512));
+  const topic = 'yiqikan/v2/' + Array.from(bits.slice(0, 16), b => b.toString(16).padStart(2, '0')).join('');
+  const key = await crypto.subtle.importKey('raw', bits.slice(32, 64), 'AES-GCM', false, ['encrypt', 'decrypt']);
+  return { name:name.trim(), pass, topic, key };
+}
+async function seal(obj){
+  const iv = crypto.getRandomValues(new Uint8Array(12));
+  const ct = new Uint8Array(await crypto.subtle.encrypt({ name:'AES-GCM', iv }, room.key, TE.encode(JSON.stringify(obj))));
+  const out = new Uint8Array(12 + ct.length); out.set(iv); out.set(ct, 12); return out;
+}
+async function unseal(bytes){
+  const pt = await crypto.subtle.decrypt({ name:'AES-GCM', iv:bytes.subarray(0, 12) }, room.key, bytes.subarray(12));
+  return JSON.parse(TD.decode(pt));
+}
+
+let links = [];
+const seen = new Map();   // message id -> time (dedupe across brokers + DataChannel)
+function dedupe(id){
+  if (!id) return false;
+  if (seen.has(id)) return true;
+  seen.set(id, Date.now());
+  if (seen.size > 800){ const cut = Date.now() - 120000; for (const [k, v] of seen) if (v < cut) seen.delete(k); }
+  return false;
+}
+function linksUp(){ return links.filter(l => l.ok).length; }
+async function sig(o, viaDc = false){
+  if (!room) return;
+  o.f = MY_ID; o.i = MY_INST; o.id = rid(6); o.ts = Date.now();
+  seen.set(o.id, Date.now());
+  if (viaDc && dc && dc.readyState === 'open'){ try{ dc.send(JSON.stringify({ t:'sig', o })); }catch{} }
+  const bytes = await seal(o);
+  for (const l of links) l.publish(room.topic, bytes);
+}
+async function onBrokerMsg(topic, bytes){
+  if (!room || topic !== room.topic) return;
+  let o; try{ o = await unseal(bytes); }catch{ return; }        // wrong password / foreign data → ignore
+  handleSig(o);
+}
+function startSignaling(){
+  links.forEach(l => l.close());
+  links = brokerList().map(u => {
+    const l = new MqttLink(u, onBrokerMsg, () => { renderNet(); if (l.ok){ l.subscribe(room.topic); sayHi(true); } });
+    return l;
+  });
+}
+
+/* =====================================================================
+   SESSION: discovery, handshake, health check, auto-reconnect
+   ===================================================================== */
+let peerId = null, peerInst = null;
+let pc = null, dc = null, dcReady = false, polite = false, sid = null;
+let makingOffer = false, ignoreOffer = false, initialDone = false;
+let lastSeen = 0, everConnected = false, joinedAt = 0, sessionStart = 0, lastHi = 0, badSince = 0, restarts = 0;
+let pendingIce = [], iceOut = [], iceTimer = null;
+let netState = 'idle';   // idle | signal | waiting | connecting | connected | reconnecting
+
 function iceServers(){
   const list = [
     { urls:['stun:stun.miwifi.com:3478','stun:stun.chat.bilibili.com:3478'] },   // reachable in mainland China
@@ -640,204 +776,311 @@ function iceServers(){
   if (tu && tu.url) list.push({ urls: tu.url.split(',').map(s=>s.trim()).filter(Boolean), username: tu.user||'', credential: tu.pass||'' });
   return list;
 }
-
-/* ---------------- Opus: stereo + high bitrate ---------------- */
 function boostOpus(sdp){
   const m = sdp.match(/a=rtpmap:(\d+) opus\/48000\/2/i); if(!m) return sdp;
   const pt = m[1];
   return sdp.replace(new RegExp('a=fmtp:'+pt+' ([^\\r\\n]*)','g'), (line, params) =>
     /stereo=1/.test(params) ? line : 'a=fmtp:'+pt+' '+params+';stereo=1;sprop-stereo=1;maxaveragebitrate=256000');
 }
+const pcHealthy = () => pc && dcReady && pc.connectionState === 'connected' && Date.now() - lastSeen < 7000;
 
-/* ---------------- PeerConnection ---------------- */
-function createPC(){
-  pc = new RTCPeerConnection({ iceServers: iceServers(), bundlePolicy:'max-bundle' });
+function sayHi(force){
+  if (!room || pcHealthy()) return;
+  if (!force && Date.now() - lastHi < 2000) return;
+  lastHi = Date.now();
+  sig({ ty:'hi', name:nameOrDefault() });
+}
+
+function teardown(){
+  if (pc){ try{ pc.close(); }catch{} }
+  pc = null; dc = null; dcReady = false; sid = null; initialDone = false; makingOffer = false;
+  pendingIce = []; iceOut = []; clearTimeout(iceTimer);
+  screenSenders = []; camSenders = { audio:null, video:null };
+  remoteSharing = false; partnerMedia = { mic:false, cam:false };
+  $('#remoteScreen').srcObject = null; $('#camRemote').srcObject = null;
+  renderStage(); renderPeople();
+}
+
+function createPC(asPolite){
+  teardown();
+  polite = asPolite;
+  pc = new RTCPeerConnection({ iceServers: iceServers(), bundlePolicy:'max-bundle', iceCandidatePoolSize:2 });
+  const mypc = pc;
   dc = pc.createDataChannel('love', { negotiated:true, id:0, ordered:true });
-  dc.onopen = () => { dcReady = true; enterApp(); };
-  dc.onclose = () => { dcReady = false; if(!$('#app').hidden) showLost(); };
-  dc.onmessage = e => { try{ onMsg(JSON.parse(e.data)); }catch(err){ console.warn(err); } };
-
-  pc.onicecandidate = e => { if (dcReady && e.candidate) send({ t:'ice', c:e.candidate.toJSON() }); };
+  dc.onopen = () => { if (pc !== mypc) return; dcReady = true; lastSeen = Date.now(); onPeerOpen(); };
+  dc.onclose = () => { if (pc !== mypc) return; dcReady = false; setNet(); };
+  dc.onmessage = e => { if (pc !== mypc) return; lastSeen = Date.now(); try{ onMsg(JSON.parse(e.data)); }catch(err){ console.warn(err); } };
+  pc.onicecandidate = e => {
+    if (pc !== mypc || !e.candidate) return;
+    iceOut.push(e.candidate.toJSON());
+    clearTimeout(iceTimer);
+    iceTimer = setTimeout(() => { if (pc !== mypc || !iceOut.length) return; const c = iceOut; iceOut = []; sig({ ty:'ice', to:peerId, sid, c }, true); }, 120);
+  };
   pc.onnegotiationneeded = async () => {
-    if (!dcReady) return;
+    if (pc !== mypc || !initialDone) return;
     try{
       makingOffer = true;
       await pc.setLocalDescription();
-      send({ t:'sdp', d:{ type:pc.localDescription.type, sdp:pc.localDescription.sdp } });
-    }catch(e){ console.error(e); } finally { makingOffer = false; }
+      sig({ ty:'sdp', to:peerId, sid, d:{ type:pc.localDescription.type, sdp:pc.localDescription.sdp } }, true);
+    }catch(e){ console.warn(e); } finally { makingOffer = false; }
   };
   pc.ontrack = e => {
+    if (pc !== mypc) return;
     const s = e.streams[0] || new MediaStream([e.track]);
     remoteStreams[s.id] = s;
     attachRemote(s);
     e.track.onunmute = () => attachRemote(s);
   };
-  pc.onconnectionstatechange = () => {
-    updateConnPill();
-    if (pc.connectionState === 'failed'){
-      if ($('#app').hidden){ $('#hostErr').textContent = t('failHelp'); $('#guestErr').textContent = t('failHelp'); }
-      else showLost();
-    }
-  };
+  pc.onconnectionstatechange = () => { if (pc === mypc){ setNet(); if (pc.connectionState === 'connected') restarts = 0; } };
+  sessionStart = Date.now();
+  return pc;
 }
-function waitIce(ms=3500){
-  return new Promise(res => {
-    if (pc.iceGatheringState === 'complete') return res();
-    const tm = setTimeout(res, ms);
-    pc.addEventListener('icegatheringstatechange', () => { if (pc.iceGatheringState === 'complete'){ clearTimeout(tm); res(); } });
-  });
-}
-async function onSdp(d){
-  try{
-    const desc = { type:d.type, sdp:boostOpus(d.sdp) };
-    const collision = desc.type === 'offer' && (makingOffer || pc.signalingState !== 'stable');
-    ignoreOffer = !polite && collision;
-    if (ignoreOffer) return;
-    await pc.setRemoteDescription(desc);
-    if (desc.type === 'offer'){
-      await pc.setLocalDescription();
-      send({ t:'sdp', d:{ type:pc.localDescription.type, sdp:pc.localDescription.sdp } });
-    }
-    retune();
-  }catch(e){ console.error('sdp', e); }
-}
-function send(o){ if (dc && dc.readyState === 'open') dc.send(JSON.stringify(o)); }
 
-/* ---------------- connect UI ---------------- */
+async function startOffer(){
+  if (!peerId) return;
+  sid = null;
+  createPC(false);
+  sid = rid(6);
+  const mysid = sid;
+  try{
+    const offer = await pc.createOffer();
+    await pc.setLocalDescription(offer);
+    if (sid !== mysid) return;
+    sig({ ty:'offer', to:peerId, sid, d:pc.localDescription.sdp, name:nameOrDefault() });
+  }catch(e){ console.warn('offer', e); }
+  setNet();
+}
+
+async function handleSig(o){
+  if (!o || o.f === MY_ID || dedupe(o.id)) return;
+  if (o.to && o.to !== MY_ID) return;
+  if (Date.now() - (o.ts || 0) > 60000 && Math.abs(Date.now() - (o.ts || 0)) < 3.6e6) return;   // stale replay (allow clock skew > 1h)
+
+  // a different person / device
+  if (peerId && o.f !== peerId){
+    if (pcHealthy()){ if (o.ty === 'hi') stageToast('🚪 ' + t('busy')); return; }
+    teardown(); peerId = null;
+  }
+  // same partner but new page load → old session is dead
+  if (peerId === o.f && peerInst && o.i !== peerInst){ teardown(); }
+  if (!peerId){ peerId = o.f; }
+  peerInst = o.i;
+  if (o.name){ partnerName = o.name; renderPeople(); }
+
+  switch (o.ty){
+    case 'hi': {
+      if (pcHealthy()) return;
+      if (MY_ID < peerId){
+        // I am the offerer: start (or restart) unless a fresh attempt is in progress
+        const busy = pc && !['failed','closed'].includes(pc.connectionState) && Date.now() - sessionStart < 9000;
+        if (!busy) startOffer();
+      } else {
+        sig({ ty:'hi', to:peerId, name:nameOrDefault() });   // let the offerer know right away
+      }
+      break;
+    }
+    case 'offer': {
+      if (MY_ID < peerId && pc && sid && o.sid !== sid && Date.now() - sessionStart < 4000) return;   // glare: keep mine
+      createPC(true);
+      sid = o.sid;
+      try{
+        await pc.setRemoteDescription({ type:'offer', sdp:boostOpus(o.d) });
+        initialDone = true;
+        await pc.setLocalDescription(await pc.createAnswer());
+        sig({ ty:'answer', to:peerId, sid, d:pc.localDescription.sdp });
+        flushIce();
+      }catch(e){ console.warn('answer', e); }
+      setNet();
+      break;
+    }
+    case 'answer': {
+      if (!pc || o.sid !== sid || pc.signalingState !== 'have-local-offer') return;
+      try{ await pc.setRemoteDescription({ type:'answer', sdp:boostOpus(o.d) }); initialDone = true; flushIce(); }catch(e){ console.warn(e); }
+      break;
+    }
+    case 'sdp': {   // renegotiation / ICE restart (perfect negotiation)
+      if (!pc || o.sid !== sid) return;
+      try{
+        const desc = { type:o.d.type, sdp:boostOpus(o.d.sdp) };
+        const collision = desc.type === 'offer' && (makingOffer || pc.signalingState !== 'stable');
+        ignoreOffer = !polite && collision;
+        if (ignoreOffer) return;
+        await pc.setRemoteDescription(desc);
+        if (desc.type === 'offer'){
+          await pc.setLocalDescription();
+          sig({ ty:'sdp', to:peerId, sid, d:{ type:pc.localDescription.type, sdp:pc.localDescription.sdp } }, true);
+        }
+        flushIce(); retune();
+      }catch(e){ console.warn('sdp', e); }
+      break;
+    }
+    case 'ice': {
+      if (!pc || o.sid !== sid) return;
+      for (const c of o.c || []){
+        if (pc.remoteDescription) pc.addIceCandidate(c).catch(() => {});
+        else pendingIce.push(c);
+      }
+      break;
+    }
+    case 'bye': {
+      teardown(); peerId = null; peerInst = null;
+      addSys(theirSym() + ' ' + partnerName + ' ' + t('left'));
+      setNet();
+      break;
+    }
+  }
+}
+function flushIce(){ const q = pendingIce; pendingIce = []; for (const c of q) pc.addIceCandidate(c).catch(() => {}); }
+
+/* re-send everything the partner needs after any (re)connect */
+function onPeerOpen(){
+  const first = !everConnected; everConnected = true;
+  send({ t:'hello', name:nameOrDefault(), dev:MY_ID });
+  attachLocalTracks();
+  sendMedia();
+  if (localSharing) send({ t:'share', on:true });
+  if (myFile && movieLoaded){
+    send({ t:'file', name:myFile.name, size:myFile.size, dur:myFile.dur });
+    if (!movie.paused) send({ t:'v', a:'play', time:movie.currentTime });
+  }
+  for (const l of SUB_LANGS) if (SUBS[l] && SUBS[l].from === 'me') sendBig({ t:'sub', lang:l, name:SUBS[l].name, cues:SUBS[l].cues });
+  for (const l of SUB_LANGS) if (SUBS[l] && SUBS[l].off) send({ t:'suboff', lang:l, v:SUBS[l].off });
+  stageToast(theirSym() + ' ' + (partnerName || t('partner')) + ' ' + t(first ? 'joined' : 'back'));
+  keepAwake(); setNet(); renderAll();
+}
+function attachLocalTracks(){
+  if (!pc) return;
+  if (camTracks.audio || camTracks.video) send({ t:'kind', id:camStream.id, kind:'cam' });
+  for (const k of ['audio','video']) if (camTracks[k] && !camSenders[k]) camSenders[k] = pc.addTrack(camTracks[k], camStream);
+  if (screenStream && !screenSenders.length) addScreenTracks();
+  setTimeout(retune, 1500);
+}
+
+/* health watchdog: ICE restart first, then a full re-handshake */
+setInterval(() => {
+  if (!room) return;
+  if (dcReady) send({ t:'ping' });
+  const st = pc ? pc.connectionState : 'none';
+  const stale = dcReady && Date.now() - lastSeen > 7000;
+  const bad = !pc || st === 'failed' || st === 'closed' || st === 'disconnected' || stale || (!dcReady && Date.now() - sessionStart > 12000);
+  if (!bad){ badSince = 0; setNet(); return; }
+  if (!badSince) badSince = Date.now();
+  const badFor = Date.now() - badSince;
+  if (!peerId){ sayHi(); setNet(); return; }
+  if (MY_ID < peerId){
+    if (pc && initialDone && (st === 'disconnected' || stale) && badFor > 2500 && badFor < 5000 && pc.restartIce){
+      pc.restartIce();                       // quick fix for network change (Wi-Fi ↔ 4G)
+    } else if (badFor > 5000 && (!pc || Date.now() - sessionStart > 9000)){
+      restarts++; startOffer();              // full re-handshake through the brokers
+    }
+  } else if (badFor > 4000){
+    sayHi();                                 // nudge the offerer
+  }
+  setNet();
+}, 2000);
+
+/* ---------------- net state → UI ---------------- */
+function setNet(){
+  let s;
+  if (!room) s = 'idle';
+  else if (pcHealthy() || (dcReady && pc && pc.connectionState === 'connected')) s = 'connected';
+  else if (!linksUp() && !dcReady) s = 'signal';
+  else if (!peerId) s = 'waiting';
+  else s = everConnected ? 'reconnecting' : 'connecting';
+  if (s !== netState){ netState = s; renderNet(); renderPeople(); }
+  else if (s === 'waiting' || s === 'signal' || s === 'connecting') renderNet();
+}
+function renderNet(){
+  const p = $('#connPill');
+  const up = linksUp(), total = links.length;
+  const map = { idle:['', 'offline'], signal:['bad', 'offline'], waiting:['warn', 'waiting'], connecting:['warn', 'connecting'], reconnecting:['warn', 'reconnecting'], connected:['ok', 'connected'] };
+  const [cls, key] = map[netState] || ['', 'offline'];
+  p.className = 'pill ' + cls;
+  p.textContent = '● ' + t(key) + (room && netState !== 'connected' ? ' · ' + up + '/' + total : '');
+  p.title = t('servers') + ' ' + up + '/' + total;
+  const nb = $('#netBanner');
+  if (!room || netState === 'connected' || netState === 'idle'){ nb.hidden = true; return; }
+  nb.hidden = false; nb.classList.toggle('reconn', netState === 'reconnecting');
+  let ico = '⏳', title = '', sub = '';
+  const waitedLong = Date.now() - joinedAt > 45000;
+  if (netState === 'signal'){ ico = '📡'; title = t('sigTitle'); sub = Date.now() - joinedAt > 10000 ? t('sigFail') : ''; }
+  else if (netState === 'waiting'){ ico = '⏳'; title = t('waitTitle'); sub = tf('waitSub', { room:room.name }) + (waitedLong ? ' · ' + t('waitLong') : ''); }
+  else if (netState === 'connecting'){ ico = '💞'; title = t('connTitle'); sub = Date.now() - sessionStart > 20000 || restarts > 1 ? t('slowHint') : ''; }
+  else { ico = '🔄'; title = t('reconnTitle'); sub = restarts > 2 ? t('slowHint') : t('reconnSub'); }
+  $('#nbIco').textContent = ico; $('#nbTitle').textContent = title; $('#nbSub').textContent = sub;
+  $('#inviteBtn').hidden = netState !== 'waiting' && netState !== 'signal';
+}
+setInterval(() => { if (room && netState !== 'connected') renderNet(); }, 3000);
+
+/* ---------------- join / leave ---------------- */
+const nameOrDefault = () => myName || (lang==='th' ? 'ฉัน' : '我');
 $('#nameIn').value = myName;
 $('#nameIn').oninput = e => { myName = e.target.value.trim(); LS.set('name', myName); };
-const nameOrDefault = () => myName || (lang==='th' ? 'ฉัน' : '我');
-document.querySelectorAll('.backBtn').forEach(b => b.onclick = () => { history.replaceState(null, '', location.pathname + location.search); location.reload(); });
-if (CAN_NATIVE_SHARE){ $('#shareOffer').hidden = false; $('#shareAnswer').hidden = false; }
-
-$('#hostBtn').onclick = async () => {
-  isHost = true; polite = false;
-  $('#choice').hidden = true; $('#hostPanel').hidden = false;
-  $('#offerOut').value = t('gen');
-  createPC();
-  await pc.setLocalDescription(await pc.createOffer());
-  await waitIce();
-  $('#offerOut').value = await encodeCode({ y:'offer', s:pc.localDescription.sdp, n:nameOrDefault() });
+$('#eyeBtn').onclick = () => { const i = $('#passIn'); i.type = i.type === 'password' ? 'text' : 'password'; };
+$('#diceBtn').onclick = () => {
+  const a = ['love','panda','kitty','mango','boba','star','moon','tea','mochi','peach'];
+  $('#roomIn').value = a[Math.random()*a.length|0] + '-' + a[Math.random()*a.length|0] + '-' + (100 + Math.random()*900|0);
+  if (!$('#passIn').value){ $('#passIn').value = rid(3); $('#passIn').type = 'text'; }
 };
-$('#connectBtn').onclick = async () => {
-  $('#hostErr').textContent = '';
-  try{
-    const o = await decodeCode($('#answerIn').value);
-    if (o.y !== 'answer') { $('#hostErr').textContent = t('wrongType'); return; }
-    partnerName = o.n || '';
-    await pc.setRemoteDescription({ type:'answer', sdp:boostOpus(o.s) });
-    $('#connectBtn').disabled = true; $('#connectBtn').textContent = t('connecting');
-  }catch(e){ console.warn(e); $('#hostErr').textContent = t('badCode'); }
+$('#joinForm').onsubmit = async e => {
+  e.preventDefault();
+  const name = $('#nameIn').value.trim(), rn = $('#roomIn').value.trim(), pw = $('#passIn').value;
+  if (!name || !rn || !pw){ $('#joinErr').textContent = t('needAll'); return; }
+  myName = name; LS.set('name', name);
+  await joinRoom(rn, pw, $('#autoIn').checked);
 };
-function openGuest(){ isHost = false; polite = true; $('#choice').hidden = true; $('#guestPanel').hidden = false; }
-$('#guestBtn').onclick = openGuest;
-$('#replyBtn').onclick = async () => {
-  $('#guestErr').textContent = '';
-  let o;
-  try{ o = await decodeCode($('#offerIn').value); }catch{ $('#guestErr').textContent = t('badCode'); return; }
-  if (o.y !== 'offer'){ $('#guestErr').textContent = t('wrongType'); return; }
-  partnerName = o.n || '';
-  $('#replyBtn').disabled = true;
-  createPC();
-  await pc.setRemoteDescription({ type:'offer', sdp:boostOpus(o.s) });
-  await pc.setLocalDescription(await pc.createAnswer());
-  $('#guestStep2').hidden = false; $('#answerOut').value = t('gen');
-  await waitIce();
-  $('#answerOut').value = await encodeCode({ y:'answer', s:pc.localDescription.sdp, n:nameOrDefault() });
-  $('#guestStep2').scrollIntoView({ behavior:'smooth', block:'center' });
-};
-
-/* copy: works on iOS too (readonly textarea needs setSelectionRange) */
-async function copyText(txt, ta){
-  try{ await navigator.clipboard.writeText(txt); return true; }catch{}
-  try{
-    ta.removeAttribute('readonly'); ta.focus(); ta.select(); ta.setSelectionRange(0, 999999);
-    const ok = document.execCommand('copy'); ta.setAttribute('readonly', ''); ta.blur(); return ok;
-  }catch{ return false; }
-}
-async function copyFrom(ta, btn){
-  if (!ta.value.startsWith('LOVE-')) return;
-  if (await copyText(ta.value, ta)){ btn.textContent = t('copied'); setTimeout(() => btn.textContent = t('copy'), 1600); }
-}
-$('#copyOffer').onclick = e => copyFrom($('#offerOut'), e.currentTarget);
-$('#copyAnswer').onclick = e => copyFrom($('#answerOut'), e.currentTarget);
-
-/* share sheet → WeChat / LINE directly from the phone */
-function inviteText(code){
-  if (IS_WEB) return t('inviteMsg') + '\n' + location.origin + location.pathname + '#join=' + code;
-  return t('inviteMsg2') + '\n' + code;
-}
-async function shareText(text){ try{ await navigator.share({ text }); }catch(e){ /* user cancelled */ } }
-$('#shareOffer').onclick = () => { const c = $('#offerOut').value; if (c.startsWith('LOVE-')) shareText(inviteText(c)); };
-$('#shareAnswer').onclick = () => { const c = $('#answerOut').value; if (c.startsWith('LOVE-')) shareText(t('answerMsg') + '\n' + c); };
-
-/* paste button */
-document.querySelectorAll('.pasteBtn').forEach(b => b.onclick = async () => {
-  const ta = $(b.dataset.target);
-  try{
-    const txt = await navigator.clipboard.readText();
-    if (txt){ ta.value = txt; return; }
-  }catch{}
-  ta.focus();
-  const err = ta.closest('.step').querySelector('.err'); if (err) err.textContent = t('pasteFail');
-});
-
-/* invite link: …/#join=LOVE-xxxx → straight to guest mode */
-window.addEventListener('hashchange', () => { if (/join=LOVE-/.test(location.hash) && !dcReady) location.reload(); });
-(function handleJoinLink(){
-  const m = location.hash.match(/join=(LOVE-[A-Za-z0-9_-]+)/);
-  if (!m) return;
-  openGuest();
-  $('#offerIn').value = m[1];
-  $('#guestErr').textContent = '';
-  const n = document.createElement('div'); n.className = 'note'; n.style.marginTop = '.5rem'; n.textContent = t('joinFromLink');
-  $('#offerIn').after(n);
-  history.replaceState(null, '', location.pathname + location.search);
-})();
-
-function updateConnPill(){
-  const p = $('#connPill'); const st = pc ? pc.connectionState : 'new';
-  const map = { connected:['ok','connected'], connecting:['warn','connecting'], failed:['bad','failed'], disconnected:['warn','connecting'], closed:['bad','offline'] };
-  const [cls, key] = map[st] || ['', 'offline'];
-  p.className = 'pill ' + cls; p.textContent = '● ' + t(key);
-}
-function showLost(){ $('#lostText').textContent = t('lost'); $('#lostbar').hidden = false; }
-
-/* keep the phone screen awake while connected */
-let wakeLock = null;
-async function keepAwake(){ try{ if ('wakeLock' in navigator && document.visibilityState === 'visible') wakeLock = await navigator.wakeLock.request('screen'); }catch{} }
-let hiddenAt = 0;
-document.addEventListener('visibilitychange', () => {
-  if (document.visibilityState === 'hidden'){ hiddenAt = Date.now(); return; }
-  if (dcReady){
-    keepAwake();
-    if (IS_MOBILE && hiddenAt && Date.now() - hiddenAt > 20000) stageToast(t('backgroundWarn'));
-    // phones may pause media when backgrounded — resume
-    ['#remoteScreen','#camRemote'].forEach(s => { const v = $(s); if (v.srcObject && v.paused) v.play().catch(()=>{}); });
-  }
-});
-
-function enterApp(){
-  $('#connect').hidden = true; $('#app').hidden = false; $('#lostbar').hidden = true;
-  send({ t:'hello', name:nameOrDefault() });
-  sendMedia();
-  $('#avMe').textContent = mySym(); $('#avThem').textContent = theirSym();
-  // a phone can't share its screen, so if partner is on desktop default to file mode
-  setMode('file'); renderAll(); keepAwake(); updateConnPill();
+async function joinRoom(rn, pw, remember){
+  if (!(window.crypto && crypto.subtle)){ $('#joinErr').textContent = t('noCrypto'); return; }
+  $('#joinBtn').disabled = true;
+  try{ room = await deriveRoom(rn, pw); }
+  catch(e){ $('#joinErr').textContent = t('noCrypto'); $('#joinBtn').disabled = false; return; }
+  if (remember) LS.set('room', { name:rn, pass:pw }); else LS.del('room');
+  joinedAt = Date.now();
+  $('#connect').hidden = true; $('#app').hidden = false;
+  $('#roomTag').textContent = '🔒 ' + room.name; $('#roomTag').hidden = false;
+  startSignaling(); setMode('file'); renderAll(); setNet(); renderNet();
   window.scrollTo(0, 0);
 }
+function leaveRoom(){
+  sig({ ty:'bye' });
+  LS.del('room');
+  setTimeout(() => { history.replaceState(null, '', location.pathname + location.search); location.reload(); }, 300);
+}
+$('#leaveBtn').onclick = leaveRoom;
+window.addEventListener('pagehide', () => { if (room && peerId) sig({ ty:'bye', to:peerId }); });
 
-/* ---------------- message router ---------------- */
+/* invite link: …/#room=<name>&key=<password>  (the hash is never sent to any server) */
+function inviteLink(){ return location.origin + location.pathname + '#room=' + encodeURIComponent(room.name) + '&key=' + encodeURIComponent(room.pass); }
+$('#inviteBtn').onclick = async () => {
+  if (!room) return;
+  const text = IS_WEB ? t('inviteMsg') + '\n' + inviteLink() : tf('inviteManual', { room:room.name, pass:room.pass });
+  if (CAN_NATIVE_SHARE && IS_MOBILE){ try{ await navigator.share({ text }); return; }catch{} }
+  try{ await navigator.clipboard.writeText(text); stageToast(t('inviteCopied')); }
+  catch{ prompt('', text); }
+};
+
+/* keep the phone screen awake while connected */
+async function keepAwake(){ try{ if ('wakeLock' in navigator && document.visibilityState === 'visible') await navigator.wakeLock.request('screen'); }catch{} }
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState !== 'visible' || !room) return;
+  links.forEach(l => l.kick());
+  keepAwake();
+  ['#remoteScreen','#camRemote'].forEach(s => { const v = $(s); if (v.srcObject && v.paused) v.play().catch(()=>{}); });
+  if (!pcHealthy()) sayHi(true);
+});
+window.addEventListener('online', () => { links.forEach(l => l.kick()); if (room && !pcHealthy()) sayHi(true); });
+
+/* ---------------- DataChannel messages ---------------- */
+function send(o){ if (dc && dc.readyState === 'open'){ try{ dc.send(JSON.stringify(o)); }catch{} } }
 function onMsg(m){
   switch(m.t){
-    case 'hello': partnerName = m.name || partnerName; renderAll(); stageToast(theirSym()+' '+partnerName+' '+t('joined')); break;
-    case 'sdp': onSdp(m.d); break;
-    case 'ice': pc.addIceCandidate(m.c).catch(e => { if(!ignoreOffer) console.warn(e); }); break;
+    case 'ping': break;
+    case 'sig': if (m.o) handleSig(m.o); break;
+    case 'hello': partnerName = m.name || partnerName; renderAll(); break;
     case 'kind': remoteKinds[m.id] = m.kind; if (remoteStreams[m.id]) attachRemote(remoteStreams[m.id]); break;
     case 'share': remoteSharing = !!m.on; if (remoteSharing) setMode('screen'); else renderStage(); renderTabs(); break;
     case 'media': partnerMedia = m; renderPeople(); break;
-    case 'file': partnerFile = m; renderFileStatus(); renderTabs(); stageToast('🎬 '+partnerName+' '+t('partnerOpened')+' '+m.name);
-                 if (movieLoaded && !movie.paused) send({ t:'v', a:'play', time:movie.currentTime }); break;
+    case 'file': partnerFile = m; renderFileStatus(); renderTabs(); stageToast('🎬 '+partnerName+' '+t('partnerOpened')+' '+m.name); break;
     case 'v': onVideoMsg(m); break;
     case 'chat': addChat(m.text, false); break;
     case 'react': floatEmoji(m.e); break;
@@ -888,7 +1131,7 @@ async function tuneSender(sender, cfg){
   p.encodings.forEach(e => { e.maxBitrate = cfg.br; if (cfg.fps) e.maxFramerate = cfg.fps; e.priority = 'high'; e.networkPriority = 'high'; });
   if (cfg.deg) p.degradationPreference = cfg.deg;
   try{ await sender.setParameters(p); }
-  catch(e){ try{ const p2 = sender.getParameters(); if(!p2.encodings||!p2.encodings.length) return; p2.encodings.forEach(x => { x.maxBitrate = cfg.br; if (cfg.fps) x.maxFramerate = cfg.fps; }); await sender.setParameters(p2); }catch(e2){ console.warn('tune', e2); } }
+  catch(e){ try{ const p2 = sender.getParameters(); if(!p2.encodings||!p2.encodings.length) return; p2.encodings.forEach(x => { x.maxBitrate = cfg.br; if (cfg.fps) x.maxFramerate = cfg.fps; }); await sender.setParameters(p2); }catch(e2){} }
 }
 function retune(){
   const q = QUALITY[$('#qSel').value] || QUALITY['1080'];
@@ -900,6 +1143,16 @@ function retune(){
   });
   if (camSenders.audio) tuneSender(camSenders.audio, { br:64000 });
   if (camSenders.video) tuneSender(camSenders.video, { br:800000 });
+}
+function addScreenTracks(){
+  if (!pc || !screenStream) return;
+  send({ t:'kind', id:screenStream.id, kind:'screen' });
+  screenSenders = [];
+  for (const tr of screenStream.getTracks()){
+    const tc = pc.addTransceiver(tr, { direction:'sendonly', streams:[screenStream] });
+    if (tr.kind === 'video') preferCodec(tc, $('#codecSel').value);
+    screenSenders.push(tc.sender);
+  }
 }
 async function startShare(){
   if (!CAN_SHARE_SCREEN) return;
@@ -916,22 +1169,15 @@ async function startShare(){
   const vt = s.getVideoTracks()[0];
   vt.contentHint = $('#hintSel').value;
   vt.onended = stopShare;
-  send({ t:'kind', id:s.id, kind:'screen' });
-  screenSenders = [];
-  for (const tr of s.getTracks()){
-    const tc = pc.addTransceiver(tr, { direction:'sendonly', streams:[s] });
-    if (tr.kind === 'video') preferCodec(tc, $('#codecSel').value);
-    screenSenders.push(tc.sender);
-  }
   localSharing = true;
-  send({ t:'share', on:true });
+  if (dcReady){ addScreenTracks(); send({ t:'share', on:true }); }
   $('#localScreen').srcObject = s;
   setMode('screen'); renderShareBtn();
   retune(); setTimeout(retune, 1500);
 }
 function stopShare(){
   if (!screenStream) return;
-  screenSenders.forEach(s => { try{ pc.removeTrack(s); }catch{} });
+  screenSenders.forEach(s => { try{ pc && pc.removeTrack(s); }catch{} });
   screenStream.getTracks().forEach(x => x.stop());
   screenStream = null; screenSenders = []; localSharing = false;
   $('#localScreen').srcObject = null;
@@ -947,31 +1193,29 @@ $('#qSel').onchange = () => {
 $('#hintSel').onchange = () => { if (screenStream) screenStream.getVideoTracks()[0].contentHint = $('#hintSel').value; retune(); };
 function renderShareBtn(){ const b = $('#shareBtn'); b.textContent = t(localSharing ? 'stopShare' : 'startShare'); b.classList.toggle('on', localSharing); b.classList.toggle('primary', !localSharing); }
 
-/* ---------------- mic / cam ---------------- */
+/* ---------------- mic / cam (tracks survive reconnects) ---------------- */
 async function toggleMedia(kind){
-  if (camSenders[kind]){
-    const tr = camSenders[kind].track;
-    try{ pc.removeTrack(camSenders[kind]); }catch{}
-    if (tr){ tr.stop(); camStream.removeTrack(tr); }
-    camSenders[kind] = null;
+  if (camTracks[kind]){
+    const tr = camTracks[kind];
+    if (camSenders[kind]){ try{ pc && pc.removeTrack(camSenders[kind]); }catch{} }
+    tr.stop(); camStream.removeTrack(tr);
+    camTracks[kind] = null; camSenders[kind] = null;
   } else {
     try{
       const s = await navigator.mediaDevices.getUserMedia(kind === 'audio'
         ? { audio:{ echoCancellation:true, noiseSuppression:true, autoGainControl:true } }
         : { video:{ facingMode:'user', width:{ideal:640}, height:{ideal:480}, frameRate:{ideal:24} } });
       const tr = s.getTracks()[0];
-      camStream.addTrack(tr);
-      send({ t:'kind', id:camStream.id, kind:'cam' });
-      camSenders[kind] = pc.addTrack(tr, camStream);
-      setTimeout(retune, 1500);
+      camTracks[kind] = tr; camStream.addTrack(tr);
+      if (pc && dcReady){ send({ t:'kind', id:camStream.id, kind:'cam' }); camSenders[kind] = pc.addTrack(tr, camStream); setTimeout(retune, 1500); }
     }catch(e){ stageToast(t('permErr')); return; }
   }
   const lv = $('#camLocal');
-  lv.srcObject = camSenders.video ? new MediaStream([camSenders.video.track]) : null;
+  lv.srcObject = camTracks.video ? new MediaStream([camTracks.video]) : null;
   if (lv.srcObject) lv.play().catch(()=>{});
   sendMedia(); renderPeople();
 }
-function sendMedia(){ send({ t:'media', mic:!!camSenders.audio, cam:!!camSenders.video }); }
+function sendMedia(){ send({ t:'media', mic:!!camTracks.audio, cam:!!camTracks.video }); }
 $('#micBtn').onclick = () => toggleMedia('audio');
 $('#camBtn').onclick = () => toggleMedia('video');
 
@@ -982,7 +1226,7 @@ const hush = (ms=900) => { ignoreUntil = performance.now() + ms; };
 function remotePlay(){
   movie.dataset.want = 'play';
   const p = movie.play();
-  if (p && p.catch) p.catch(() => { $('#unmuteBtn').hidden = false; });   // iOS needs a tap for sound
+  if (p && p.catch) p.catch(() => { $('#unmuteBtn').hidden = false; });
 }
 movie.addEventListener('play',   () => { movie.dataset.want = 'play'; if (!quiet()) send({ t:'v', a:'play',  time:movie.currentTime }); });
 movie.addEventListener('pause',  () => { if (!quiet() && !movie.ended) send({ t:'v', a:'pause', time:movie.currentTime }); });
@@ -1010,8 +1254,7 @@ function onVideoMsg(m){
   if (m.a === 'play'){
     hush(); const target = m.time + lat;
     if (Math.abs(movie.currentTime - target) > 0.3) movie.currentTime = target;
-    remotePlay();
-    stageToast('▶ ' + partnerName + ' ' + t('playBy'));
+    if (movie.paused){ remotePlay(); stageToast('▶ ' + partnerName + ' ' + t('playBy')); }
   } else if (m.a === 'pause'){
     hush(); movie.dataset.want = 'pause'; movie.pause(); movie.currentTime = m.time;
     stageToast('⏸ ' + partnerName + ' ' + t('pauseBy'));
@@ -1029,7 +1272,7 @@ function onVideoMsg(m){
     }
   }
 }
-setInterval(() => { if (isHost && dcReady && movieLoaded && !movie.paused) send({ t:'v', a:'tick', time:movie.currentTime, paused:false }); }, 2000);
+setInterval(() => { if (isHost() && dcReady && movieLoaded && !movie.paused) send({ t:'v', a:'tick', time:movie.currentTime, paused:false }); }, 2000);
 
 function runCountdown(time){
   hush(4500); movie.pause(); movie.currentTime = time; setMode('file');
@@ -1056,7 +1299,7 @@ function renderFileStatus(){
   if (partnerFile){
     parts.push(theirSym() + ' ' + partnerName + ' ' + t('partnerOpened') + ': ' + partnerFile.name + ' (' + fmtTime(partnerFile.dur) + ')');
     if (myFile && myFile.dur) parts.push(Math.abs(myFile.dur - partnerFile.dur) < 2 ? t('match') : t('mismatch'));
-  } else if (myFile) parts.push(t('partnerNoFile'));
+  } else if (myFile && dcReady) parts.push(t('partnerNoFile'));
   el.textContent = parts.join('  ·  ');
 }
 
@@ -1079,7 +1322,6 @@ function renderStage(){
   movie.hidden = !showMovie;
   $('#stage').classList.toggle('hasMovie', showMovie);
   $('#ccBtn').hidden = !showMovie;
-  if (typeof renderSubs === 'function') renderSubs(true);
   $('#remoteScreen').hidden = !(mode === 'screen' && remoteSharing);
   $('#localScreen').hidden = !(mode === 'screen' && localSharing);
   let emptyTxt = null, icon = '🎬';
@@ -1091,9 +1333,9 @@ function renderStage(){
   $('#empty').hidden = emptyTxt === null;
   if (emptyTxt !== null){ $('#emptyText').textContent = emptyTxt; $('#emptyIcon').textContent = icon; }
   renderTabs(); renderFileStatus();
+  if (typeof renderSubs === 'function') renderSubs(true);
 }
 
-/* fullscreen: real fullscreen where allowed (desktop/Android), CSS "theater" everywhere (iPhone) */
 const stage = $('#stage');
 function setFull(on){
   stage.classList.toggle('full', on);
@@ -1113,8 +1355,7 @@ document.addEventListener('fullscreenchange', () => { if (!document.fullscreenEl
 document.addEventListener('keydown', e => { if (e.key === 'Escape' && stage.classList.contains('full') && !document.fullscreenElement) setFull(false); });
 $('#fullChat').onsubmit = e => {
   e.preventDefault(); const v = $('#fullChatIn').value.trim(); if (!v) return;
-  send({ t:'chat', text:v }); addChat(v, true); stageToast(mySym() + ' ' + v); $('#fullChatIn').value = '';
-  $('#fullChatIn').blur();
+  sendChat(v); stageToast(mySym() + ' ' + v); $('#fullChatIn').value = ''; $('#fullChatIn').blur();
 };
 
 /* ---------------- reactions / toasts / nudge ---------------- */
@@ -1142,15 +1383,18 @@ $('#nudgeBtn').onclick = () => { send({ t:'nudge' }); floatEmoji('💓'); };
 
 /* ---------------- people ---------------- */
 function renderPeople(){
+  $('#avMe').textContent = mySym(); $('#avThem').textContent = theirSym();
   $('#nameMe').textContent = nameOrDefault() + ' (' + t('you') + ')';
   $('#nameThem').textContent = partnerName || t('partner');
-  const meCam = !!camSenders.video;
+  const meCam = !!camTracks.video;
   $('#camLocal').hidden = !meCam; $('#avMe').hidden = meCam;
-  $('#stateMe').textContent = (camSenders.audio ? '🎙️' : '🔇') + ' ' + (meCam ? '📷' : '');
-  const themCam = !!partnerMedia.cam;
+  $('#stateMe').textContent = (camTracks.audio ? '🎙️' : '🔇') + ' ' + (meCam ? '📷' : '');
+  const here = netState === 'connected';
+  const themCam = here && !!partnerMedia.cam;
+  $('#faceThem').classList.toggle('away', !here);
   $('#camRemote').style.opacity = themCam ? 1 : 0; $('#avThem').hidden = themCam;
-  $('#stateThem').textContent = (partnerMedia.mic ? '🎙️' : '🔇') + ' ' + (themCam ? '📷' : '');
-  $('#micBtn').classList.toggle('on', !!camSenders.audio);
+  $('#stateThem').textContent = here ? (partnerMedia.mic ? '🎙️' : '🔇') + ' ' + (themCam ? '📷' : '') : (netState === 'reconnecting' ? '🔄' : '⏳');
+  $('#micBtn').classList.toggle('on', !!camTracks.audio);
   $('#camBtn').classList.toggle('on', meCam);
 }
 
@@ -1165,9 +1409,14 @@ function addChat(text, mine){
     stageToast(theirSym() + ' ' + partnerName + ': ' + text);
   }
 }
+function addSys(text){ const d = document.createElement('div'); d.className = 'msg sys'; d.textContent = text; const l = $('#chatList'); l.appendChild(d); l.scrollTop = l.scrollHeight; }
+function sendChat(v){
+  if (!dcReady){ stageToast('⚠️ ' + t('notConnected')); return false; }
+  send({ t:'chat', text:v }); addChat(v, true); return true;
+}
 $('#chatForm').onsubmit = e => {
   e.preventDefault(); const v = $('#chatIn').value.trim(); if (!v) return;
-  send({ t:'chat', text:v }); addChat(v, true); $('#chatIn').value = '';
+  if (sendChat(v)) $('#chatIn').value = '';
 };
 function setPanel(p){
   panelTab = p;
@@ -1211,6 +1460,7 @@ function onGame(m){
 
 /* ---- ⚡ reaction ---- */
 function rxStart(){
+  if (!dcReady){ stageToast('⚠️ ' + t('notConnected')); return; }
   const id = Date.now().toString(36) + Math.random().toString(36).slice(2,6);
   const delay = 1500 + Math.random() * 3000;
   send({ t:'g', g:'rx', a:'start', id, delay });
@@ -1288,7 +1538,7 @@ function renderGame(){
             + (rx.phase === 'done' ? `<div class="big-result">${resultText(rx.result)}</div><button class="primary" id="rxGo">${t('again')}</button>` : '');
     }
     g.innerHTML = zone + below;
-    const z = $('#rxZ'); if (z) z.onpointerdown = rxTap;   // pointerdown = instant on touch screens
+    const z = $('#rxZ'); if (z) z.onpointerdown = rxTap;
     const go = $('#rxGo'); if (go) go.onclick = rxStart;
   }
   else if (game === 'rps'){
@@ -1346,29 +1596,11 @@ setInterval(async () => {
   $('#statPill').hidden = !parts.length;
 }, 1000);
 
-/* ---------------- settings ---------------- */
-$('#setBtn').onclick = () => {
-  const tu = LS.get('turn', {}) || {};
-  $('#turnUrl').value = tu.url || ''; $('#turnUser').value = tu.user || ''; $('#turnPass').value = tu.pass || '';
-  if ($('#settings').showModal) $('#settings').showModal(); else $('#settings').setAttribute('open', '');
-};
-$('#closeSet').onclick = () => { if ($('#settings').close) $('#settings').close(); else $('#settings').removeAttribute('open'); };
-$('#saveSet').onclick = e => {
-  const btn = e.currentTarget;
-  LS.set('turn', { url:$('#turnUrl').value.trim(), user:$('#turnUser').value.trim(), pass:$('#turnPass').value });
-  btn.textContent = t('saved'); setTimeout(() => btn.textContent = t('save'), 1200);
-};
-$('#resetScore').onclick = () => { scores = { me:0, them:0 }; LS.set('scores', scores); renderScore(); };
-
 /* =====================================================================
    SUBTITLES — 3 languages (TH / EN / ZH), custom overlay renderer
-   - parses SRT / VTT / ASS, auto-detects encoding (UTF-8/16, GBK, Big5, TIS-620)
-   - auto-detects language, splits bilingual 中英 files
-   - shared with partner over the DataChannel (chunked)
-   - each viewer chooses which languages to show (any combination)
    ===================================================================== */
 const SUB_LANGS = ['th','en','zh'];
-const SUBS = {};                                   // lang -> { cues:[[s,e,text]], name, from:'me'|'partner', off }
+const SUBS = {};
 let subShow = LS.get('subShow', null) || { th: lang === 'th', en: false, zh: lang === 'zh' };
 const subAutoOn = new Set();
 let subScale = LS.get('subScale', 100), subBg = LS.get('subBg', 35);
@@ -1390,11 +1622,11 @@ function decodeSubBytes(buf){
   const tryDec = enc => { try{ return new TextDecoder(enc).decode(u); }catch{ return ''; } };
   const gb = tryDec('gb18030'), b5 = tryDec('big5'), th = tryDec('windows-874');
   const sg = zhScore(gb, COMMON_ZH), sb = zhScore(b5, COMMON_ZT);
-  if (Math.max(sg, sb) > 0.06) return sg >= sb ? gb : b5;          // real Chinese has lots of 的/你/我/是
+  if (Math.max(sg, sb) > 0.06) return sg >= sb ? gb : b5;
   return th || gb;
 }
 function parseTime(x){
-  const m = x.trim().match(/(?:(\d+):)?(\d{1,2}):(\d{1,2})(?:[,.](\d{1,3}))?/); if (!m) return NaN;
+  const m = String(x || '').trim().match(/(?:(\d+):)?(\d{1,2}):(\d{1,2})(?:[,.](\d{1,3}))?/); if (!m) return NaN;
   const frac = m[4] ? parseInt(m[4].padEnd(3, '0'), 10) / 1000 : 0;
   return (+(m[1] || 0)) * 3600 + (+m[2]) * 60 + (+m[3]) + frac;
 }
@@ -1404,7 +1636,7 @@ const cleanText = s => s.replace(/\{\\[^}]*\}/g, '').replace(/\\N/gi, '\n').repl
 function parseSubs(txt){
   txt = txt.replace(/^\uFEFF/, '').replace(/\r\n?/g, '\n');
   const cues = [];
-  if (/^\s*\[Script Info\]/i.test(txt) || /^Dialogue:/m.test(txt)){          // ASS / SSA
+  if (/^\s*\[Script Info\]/i.test(txt) || /^Dialogue:/m.test(txt)){
     let fmt = ['layer','start','end','style','name','marginl','marginr','marginv','effect','text'];
     for (const line of txt.split('\n')){
       if (/^Format:/i.test(line) && /text/i.test(line) && /start/i.test(line)) fmt = line.slice(7).split(',').map(x => x.trim().toLowerCase());
@@ -1415,7 +1647,7 @@ function parseSubs(txt){
       const st = parseTime(parts[fmt.indexOf('start')]), en = parseTime(parts[fmt.indexOf('end')]);
       if (text && isFinite(st) && isFinite(en)) cues.push([st, en, text]);
     }
-  } else {                                                                    // SRT / VTT
+  } else {
     for (const block of txt.split(/\n\s*\n/)){
       const lines = block.split('\n');
       const i = lines.findIndex(l => l.includes('-->'));
@@ -1440,7 +1672,6 @@ function detectLang(cues, fileName){
   if (zh > 30 && zh * 2.5 >= la * 0.3) return 'zh';
   return 'en';
 }
-/* Chinese subs are often "中文\nEnglish" in one file → split into two tracks */
 function splitBilingual(cues){
   let both = 0;
   const zh = [], en = [];
@@ -1453,11 +1684,9 @@ function splitBilingual(cues){
   }
   return both > cues.length * 0.4 ? { zh, en } : null;
 }
-
-/* ---- load ---- */
 async function loadSubFile(file, forceLang){
   let cues;
-  try{ cues = parseSubs(decodeSubBytes(await file.arrayBuffer())); }catch(e){ console.warn(e); cues = []; }
+  try{ cues = parseSubs(decodeSubBytes(await file.arrayBuffer())); }catch(e){ cues = []; }
   if (!cues.length){ stageToast('⚠️ ' + t('subBad') + ': ' + file.name); return; }
   const lg = forceLang || detectLang(cues, file.name);
   if (lg === 'zh'){
@@ -1473,7 +1702,6 @@ async function loadSubFile(file, forceLang){
 }
 function setSub(lg, cues, name, from, share){
   SUBS[lg] = { cues, name, from, off: SUBS[lg] ? SUBS[lg].off : 0 };
-  // auto-visibility: the viewer's own language always wins; otherwise show something rather than nothing
   const pref = lang === 'zh' ? 'zh' : 'th';
   if (lg === pref){
     subShow[lg] = true;
@@ -1496,12 +1724,11 @@ function delSub(lg, share){
 }
 function onSubMsg(m){
   if (!SUB_LANGS.includes(m.lang) || !Array.isArray(m.cues)) return;
+  if (SUBS[m.lang] && SUBS[m.lang].from === 'partner' && SUBS[m.lang].name === m.name && SUBS[m.lang].cues.length === m.cues.length) return;   // re-sent after reconnect
   const cues = m.cues.filter(c => Array.isArray(c) && isFinite(c[0]) && isFinite(c[1])).map(c => [+c[0], +c[1], String(c[2] || '')]);
   setSub(m.lang, cues, String(m.name || ''), 'partner', false);
   stageToast('💬 ' + theirSym() + ' ' + partnerName + ' ' + t('subGot') + ' ' + t('lname_' + m.lang));
 }
-
-/* ---- big messages over the DataChannel (subtitle files can be >200 KB) ---- */
 const CHUNK = 16000, inChunks = {};
 function sendBig(obj){
   const str = JSON.stringify(obj);
@@ -1514,8 +1741,6 @@ function onChunk(m){
   if (b.parts[m.i] === undefined){ b.parts[m.i] = m.d; b.got++; }
   if (b.got === m.n){ delete inChunks[m.id]; try{ onMsg(JSON.parse(b.parts.join(''))); }catch(e){ console.warn('chunk', e); } }
 }
-
-/* ---- render overlay ---- */
 function cuesAt(cues, tm){
   let lo = 0, hi = cues.length - 1, idx = -1;
   while (lo <= hi){ const mid = (lo + hi) >> 1; if (cues[mid][0] <= tm){ idx = mid; lo = mid + 1; } else hi = mid - 1; }
@@ -1542,10 +1767,7 @@ function renderSubs(force){
   }
 }
 let subRaf = 0;
-function subLoop(){
-  renderSubs();
-  subRaf = (!movie.paused && !movie.ended) ? requestAnimationFrame(subLoop) : 0;
-}
+function subLoop(){ renderSubs(); subRaf = (!movie.paused && !movie.ended) ? requestAnimationFrame(subLoop) : 0; }
 movie.addEventListener('play', () => { if (!subRaf) subRaf = requestAnimationFrame(subLoop); });
 ['pause','seeked','timeupdate','loadeddata'].forEach(ev => movie.addEventListener(ev, () => renderSubs()));
 function applySubStyle(){
@@ -1561,8 +1783,6 @@ function subsChanged(){
   $('#ccBtn').classList.toggle('has', on > 0);
   renderSubs(true); rebuildNativeTrack();
 }
-
-/* ---- native fallback track: only used when the browser forces its own fullscreen player (iPhone) ---- */
 let nativeFs = false, nativeUrl = null;
 const vttTime = x => { x = Math.max(0, x); const h = Math.floor(x / 3600), m = Math.floor(x % 3600 / 60), s = (x % 60).toFixed(3).padStart(6, '0'); return String(h).padStart(2,'0') + ':' + String(m).padStart(2,'0') + ':' + s; };
 function rebuildNativeTrack(){
@@ -1583,7 +1803,6 @@ movie.addEventListener('webkitbeginfullscreen', () => { nativeFs = true; setNati
 movie.addEventListener('webkitendfullscreen', () => { nativeFs = false; setNativeMode(); });
 document.addEventListener('fullscreenchange', () => { nativeFs = document.fullscreenElement === movie; setNativeMode(); });
 
-/* ---- dialog UI ---- */
 function fmtOff(v){ return (v >= 0 ? '+' : '') + v.toFixed(1) + 's'; }
 function renderSubRows(){
   const box = $('#subRows'); if (!box) return;
@@ -1609,20 +1828,58 @@ function renderSubRows(){
   });
   box.querySelectorAll('[data-del]').forEach(el => el.onclick = () => delSub(el.dataset.del, true));
 }
-function openSubDlg(){ renderSubRows(); const d = $('#subDlg'); if (d.showModal) d.showModal(); else d.setAttribute('open', ''); }
+function openDlg(d){ if (d.showModal) d.showModal(); else d.setAttribute('open', ''); }
+function closeDlg(d){ if (d.close) d.close(); else d.removeAttribute('open'); }
+function openSubDlg(){ renderSubRows(); openDlg($('#subDlg')); }
 $('#subOpen').onclick = openSubDlg;
 $('#ccBtn').onclick = openSubDlg;
-$('#subClose').onclick = () => { const d = $('#subDlg'); if (d.close) d.close(); else d.removeAttribute('open'); };
-$('#subDlg').addEventListener('click', e => { if (e.target === $('#subDlg')) $('#subClose').click(); });
+$('#subClose').onclick = () => closeDlg($('#subDlg'));
+$('#subDlg').addEventListener('click', e => { if (e.target === $('#subDlg')) closeDlg($('#subDlg')); });
 $('#subAutoIn').onchange = async e => { for (const f of e.target.files) await loadSubFile(f); e.target.value = ''; };
 $('#subSize').value = subScale; $('#subBgR').value = subBg;
 $('#subSize').oninput = e => { subScale = +e.target.value; LS.set('subScale', subScale); applySubStyle(); };
 $('#subBgR').oninput = e => { subBg = +e.target.value; LS.set('subBg', subBg); applySubStyle(); };
 applySubStyle();
 
+/* ---------------- settings ---------------- */
+$('#setBtn').onclick = () => {
+  const tu = LS.get('turn', {}) || {};
+  $('#turnUrl').value = tu.url || ''; $('#turnUser').value = tu.user || ''; $('#turnPass').value = tu.pass || '';
+  $('#brokerIn').value = LS.get('brokers', '') || '';
+  $('#brokerIn').placeholder = DEFAULT_BROKERS.join('\n');
+  $('#leaveBtn').hidden = !room;
+  openDlg($('#settings'));
+};
+$('#closeSet').onclick = () => closeDlg($('#settings'));
+$('#saveSet').onclick = e => {
+  const btn = e.currentTarget;
+  LS.set('turn', { url:$('#turnUrl').value.trim(), user:$('#turnUser').value.trim(), pass:$('#turnPass').value });
+  const nb = $('#brokerIn').value.trim(), changed = nb !== (LS.get('brokers', '') || '');
+  LS.set('brokers', nb);
+  if (changed && room){ startSignaling(); renderNet(); }
+  btn.textContent = t('saved'); setTimeout(() => btn.textContent = t('save'), 1200);
+};
+$('#resetScore').onclick = () => { scores = { me:0, them:0 }; LS.set('scores', scores); renderScore(); };
+
 /* ---------------- boot ---------------- */
-function renderAll(){ renderPeople(); renderTabs(); renderStage(); renderShareBtn(); renderGame(); if (typeof renderSubRows === 'function') renderSubRows(); }
+function renderAll(){ renderPeople(); renderTabs(); renderStage(); renderShareBtn(); renderGame(); renderSubRows(); }
 applyLang();
+(function boot(){
+  // invite link prefill: #room=…&key=…
+  const h = new URLSearchParams(location.hash.slice(1));
+  const saved = LS.get('room', null);
+  if (h.get('room')){
+    $('#roomIn').value = h.get('room'); $('#passIn').value = h.get('key') || '';
+    history.replaceState(null, '', location.pathname + location.search);
+    if (myName && h.get('key')){ joinRoom(h.get('room'), h.get('key'), true); return; }
+    $('#nameIn').focus();
+    return;
+  }
+  if (saved){
+    $('#roomIn').value = saved.name; $('#passIn').value = saved.pass;
+    if (myName) joinRoom(saved.name, saved.pass, true);
+  }
+})();
 </script>
 </body>
 </html>
